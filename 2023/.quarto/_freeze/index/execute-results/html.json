@@ -1,0 +1,14 @@
+{
+  "hash": "c7bdbb7041a451fca3d13aa1de10e2e7",
+  "result": {
+    "markdown": "# Preface {.unnumbered}\n\nTo jest projekt **Bootcamp 2023 by ATLAS**\n\n\n::: {.cell}\n\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
