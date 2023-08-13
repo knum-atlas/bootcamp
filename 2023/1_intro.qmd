@@ -1,0 +1,152 @@
+# Koło Naukowe Uczenia Maszynowego ATLAS - Bootcamp 2023 {.unnumbered}
+
+---
+author: "Paweł Woźniak"
+format: 
+  html:
+    toc: true
+    embed-resources: true
+    self-contained: true
+    page-layout: full
+date: "02-06-2023"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+# Spotkanie 1 - Wprowadzenie
+___
+
+## 1. O Kole
+<center>![](obrazki/Atlas_logotyp_czarne.png){height=400} <br></center>
+
+
+### 1. Podstawowe informacje dotyczące Koła
+
+<ul>
+  <li> Koło zostało założone w lipcu 2023 r. </li>
+  <li> Funkcjonuje przy Katedrze Matematyki Stosowanej Wydziału Podstaw Techniki </li>
+  <li> Opiekunem Koła jest mgr inż. Magdalena Piłat-Rożek</li>
+  <li> Zarząd na ten rok akademicki:</li>
+  <ul>
+    <li> Paweł Woźniak - Prezes</li>
+    <li> Kacper Wójtowicz - Wiceprezes</li>
+    <li> Patryk Marek - Sekretarz</li>
+    <li> Michał Koziński - Skarbnik</li>
+  </ul>
+</ul>
+<br>
+
+### 2. Cele Koła
+Celem Koła jest poszerzanie wiedzy studentów przede wszystkim na tematy związane z uczeniem maszynowym oraz sztuczną inteligencją. Chcemy tego dokonać poprzez:
+<ul>
+  <li> Organizację corocznych bootcampów - takich jak ten! </li>
+  <li> Study Groups - podzielenie członków Koła na grupy, które skupiałyby się bardziej szczegółowo na jakichś tematach, np. Computer Vision, NLP itd. </li>
+  <li> Wyjazdy na Hackathony oraz konferencje związane z ML/AI </li>
+  <li> Udział w projektach naukowych i dydaktycznych Katedry Matematyki Stosowanej </li>
+  <li> Organizację prelekcji </li>
+</ul>
+
+### 3. Dotychczasowe aktywności
+<ul>
+  <li> Hackathony </li>
+  <ul>
+    <li> KNUM x Golem Hackathon 2022 </li>
+    <li> BEST Hacking League 2023 (3. miejsce w kategorii Artificial Intelligence) </li>
+    <li> HackYeah 2023</li>
+  </ul>
+  <li> Noc inżynierów 2023 </li>
+  <li> ML in PL Conference 2023 (soon) </li>
+</ul>
+
+### 4. Dołączenie do Koła
+Pod koniec ostatniego spotkania pojawi się link do formularzu rejestracyjnego. Po wypełnieniu go, otrzymacie maila z zaproszeniem na krótką rozmowę rekrutacyjną. Kilka dni po rozmowie otrzymacie maila z informacją dotyczącą przyjęcia lub nieprzyjęcia w szeregi Koła.
+
+## 2. Struktura bootcampu
+<ul>
+  <li> Odbędzie się 5 spotkań </li>
+  <ol>
+    <li> Wprowadzenie </li>
+    <li> Regresja </li>
+    <li> Klasyfikacja </li>
+    <li> Dane - sztuczki i rady </li>
+    <li> Sieć neuronowa </li>
+  </ol>
+  <li> Każde spotkanie ma przygotowaną część teoretyczną oraz praktyczną, zarówno w R jak i Pythonie. </li>
+  <li> Po trzecim spotkaniu udostępnimy konkurs na Kaggle'u </li>
+  
+## 3. Dane
+#### Podstawowe pojęcia
+<center>![](obrazki/mem2.png){height=400} <br><br></center>
+Poniższe dane pochodzą ze zbioru `penguins` z pakietu `palmerpenguins` w R. <br>
+Korzystając z poniższej tabeli odpowiemy sobie teraz na kilka podstawowych pytań:
+<ol>
+  <li> Czym jest obserwacja? </li>
+  <li> Czym jest cecha? </li>
+  <li> Jakie wyróżniamy typy cech? </li>
+  <li> Czym jest predyktor/zmienna niezależna? </li>
+  <li> Czym jest target/zmienna niezależna? </li>
+</ol>
+  
+```{r}
+library(kableExtra)
+```
+
+```{r}
+data(penguins, package = "palmerpenguins")
+head(penguins) %>% 
+  kbl() %>% 
+  kable_styling()
+  
+```
+<br>
+<details>
+  <summary>Odpowiedzi</summary>
+  <ol>
+  <li> Obserwacja to pojedynczy wiersz w tabeli.</li>
+  <li> Cecha to pojedyncza kolumna, służy do opisu danej obserwacji, w naszej tabeli jest to np. `body_mass_g` lub `Species`. </li>
+  <li> Cechy, zwane też zmiennymi, dzielimy na: </li>
+    <ul> 
+      <li> Zmienne typu ciągłego - przyjmują dowolne wartości liczbowe z $\mathbb{R}$, np. `bill_depth_mm`. </li>
+      <li> Zmienne typu jakościowego - są to nieporównywalne między sobą stany, gdzie jeden nie jest lepszy od drugiego, np. `Species`.</li>
+      <li> Zmienne typu porządkowego - są to zmienne typu jakościowego, lecz mają ustalony porządek, w naszym zbiorze nie znajduje się taka zmienna, ale mogłoby to być np. `wykształcenie`, gdzie podstawowe < średnie < wyższe.</li>
+    </ul>
+
+  <li> Predyktorem nazywamy cechę, która wykorzystywana będzie do przewidywania wartości zmiennej wynikowej (targetu/zmiennej niezależnej), w naszej tabelce jest to np. zmienna `body_mass_g`. </li>
+  <li> Inaczej zmienna wynikowa. Cecha, którą będziemy przewidywać, w rzeczywistości jest to wartość nieznana. W powyższym zbiorze może to być `Species`, czyli gatunek pingwina. </li>
+</ol>
+</details>
+
+#### Podział danych
+<center>![](obrazki/mem3.jpeg){height=400} <br></center> <br>
+Dane dzielimy na zbiór treningowy i testowy. Zbiór treningowy zazwyczaj stanowi większość wszystkich obserwacji, często jest to 70-90%, zależnie od liczby obserwacji, którymi dysponujemy. Ten pierwszy wykorzystujemy do nauczenia modelu. Wszystkie operacje, np. normalizacja, wykonujemy tylko na zbiorze uczącym.<br> Do zbioru testowego wracamy dopiero, gdy mamy gotowy model. Używamy go w celu określenia skuteczności naszego modelu. Dlaczego to ważne?
+
+#### Przeuczenie i niedouczenie
+<center>![](obrazki/mem4.jpg){height=400} <br></center> <br>
+W rzeczywistości w zadaniach modelowania możemy mieć do czynienia z trzema sytuacjami.
+<ol>
+  <li> Model jest niedouczony - jest słabo dopasowany zarówno do danych treningowych, jak i testowych. Słabe wyniki predykcji w tym przypadku mogą wynikać z czynników takich jak:
+  </li>
+  <ul>
+  <li> Zbyt mały zbiór uczący </li>
+  <li> Za mało predyktorów </li>
+  <li> Dostępne predyktory nie mówią wystarczająco dużo o zmiennej wynikowej. </li>
+  <li> Model jest zbyt prosty, nie jest w stanie odwzorować skomplikowanych zależności pomiędzy cechami. </li>
+  </ul>
+  <li> Model jest dobrze nauczony - w takiej sytuacji model osiąga dobre, zbliżone wyniki na zbiorze treningowym i testowym. </li>
+  <li> Model jest przeuczony - w tej sytuacji model osiąga zadowalające wyniki na zbiorze treningowym, natomiast ze zbiorem testowym radzi sobie dużo gorzej. Przeuczenie może wynikać z takich rzeczy jak:</li>
+  <ul> 
+  <li> Zbyt mały zbiór uczący </li>
+  <li> Model jest zbyt złożony </li>
+  </ul>
+</ol>
+::: {layout-ncol=1}
+![Przykład pochodzi z www.towardsdatascience.com](obrazki/example1.png){fig-alt="A drawing of an elephant."}
+:::
+
+
+## 4. Czym jest uczenie maszynowe, czyli jak uczą się modele?
+<center>![](obrazki/mem1.png){height=400} <br></center>
+  

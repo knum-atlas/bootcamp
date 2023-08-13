@@ -1,0 +1,9 @@
+-O kole, przedstawienie planów, zarządu itd.
+-Algorytm uczący (minimalizacja funkcji straty)
+-Uczenie maszynowe nadzorowane i nienadzorowane
+-Podział zbiorów na treningowy, testowy - dlaczego
+-Co to są predyktory, targety/labele,
+-Typy predykcji (regresja/klasyfikacja)
+-Tabela z pokazaniem predyktorów/targetu
+-Typy cech - ciągłe, kategoryczne
+-Niedopasowanie/przeuczenie
