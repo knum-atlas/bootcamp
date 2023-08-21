@@ -148,5 +148,36 @@ W rzeczywistości w zadaniach modelowania możemy mieć do czynienia z trzema sy
 
 
 ## 4. Czym jest uczenie maszynowe, czyli jak uczą się modele?
-<center>![](obrazki/mem1.png){height=400} <br></center>
+<center>![](obrazki/mem1.png){height=400} <br></center><br>
+Tradycyjne programowanie algorytmów polega na tworzeniu zasad w celu otrzymania wyniku. W uczeniu maszynowym pokazujemy specjalnemu algorytmowi dane, wraz z wynikiem w celu znalezienia reguł, wzorców, pozwalających na otrzymywanie odpowiedzi dla nowych, nieznanych obserwacji. <br>
+W tradycyjnym programowaniu jeśli pojawiłaby się nowa obserwacja, nie wpasowująca się w tworzone reguły, nie będziemy w stanie otrzymać poprawnej odpowiedzi.
+<center>![](obrazki/example2.png){height=400} <br></center><br>
+Algorytmy uczenia maszynowego możemy podzielić na nadzorowane (ang. <i>supervised</i>) i nienadzorowane (ang. <i>unsupervised</i>). W uczeniu nadzorowanym mamy "nauczyciela", który najczęściej jest zmienną wynikową i mówi algorytmowi jaka jest odpowiedź przy zadanych wartościach cech, co pozwala ustalić mu zależności. Na przykład, jeśli chcemy wykryć, czy dany mail jest spamem, czy nie i dysponujemy zbiorem, który zawiera wiadomości z oznaczeniem, czy były spamem, czy nie, wtedy skorzystamy z algorytmów uczenia nadzorowanego. <br>
+
+W uczeniu nienadzorowanym nie mamy "nauczyciela", dysponujemy obserwacjami bez zmiennej wynikowej. Z takich algorytmów korzystamy, np. w algorytmach grupujących, gdzie wcześniej nie znamy grup, do których należą obserwacje, czyli nie ma nauczyciela. Algorytmów grupujących używamy, żeby np. stwierdzić, że żywieniowo Polska jest bardziej podobna do Ukrainy, a Hiszpania jest bardziej podobna do Portugalii. <br>
+
+<center>![](obrazki/example3.svg){height=300} <br></center><br>
+
+#### Regresja i klasyfikacja
+Algorytmy uczenia nadzorowanego możemy dalej podzielić na algorytmy regresyjne i klasyfikacyjne. Zadania regresyjne służą przewidywaniu ciągłych wartości, np. ceny mieszkania, miesięcznych wydatków klienta w naszym sklepie itd. Zadania klasyfikacyjne służą przewidywaniu wartości dyskretnych, np. czy klient kupi nasz produkt lub czy wiadomość jest spamem.
+
+#### Funkcja straty
+<figure class="quote"> <blockquote> A way to measure whether the algorithm is doing a good job — This is necessary to determine the distance between the algorithm’s current output and its expected output. The measurement is used as a feedback signal to adjust the way the algorithm works. This adjustment step is what we call learning.  </blockquote>
+<figcaption> François Chollet, <cite> Deep learning with Python (2017), Manning, chapter 1 p.6 </cite></figcaption></figure>
+
+Funkcja straty jest funkcją, która oblicza odległość pomiędzy obecną przewidywaną wartością, a oczekiwaną. Funkcja straty ewaluuje to, jak dobrze algorytm modeluje dane. Funkcje straty używane są zarówno dla zadań regresyjnych, jak i klasyfikacyjnych. 
+
+##### Mean Square Error Loss
+Błąd średniokwadratowy jest prostą i bardzo popularną funkcją straty. Używany jest do zadań regresyjnych. Jest to suma kwadratów różnic pomiędzy przewidywaną, a prawdziwą wartością. Wzór na MSE:
+$$MSE = \frac{1}{n}\sum_{i=0}^{n}(y_i-\hat{y}_i)^2, $$
+gdzie: <br>
+<!-- <ul> -->
+<!--   <li> $n$ - liczba obserwacji </li> -->
+<!--   <li> $y_i$ - i-ta obserwacja </li> -->
+<!--   <li> $\hat{y}_i$ - predykcja dla i-tej obserwacji </li> -->
+<!-- </ul> -->
+-- $n$ - liczba obserwacji <br>
+-- $y_i$ - i-ta obserwacja <br>
+-- $\hat{y}_i$ - predykcja dla i-tej obserwacji <br>
+
   
