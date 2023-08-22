@@ -1,0 +1,111 @@
+# Koło Naukowe Uczenia Maszynowego ATLAS - Bootcamp 2023 {.unnumbered}
+
+---
+author: "KNUM ATLAS"
+format: 
+  html:
+    toc: true
+    embed-resources: true
+    self-contained: true
+    page-layout: full
+date: "02-06-2023"
+---
+
+# Spotkanie 2 - Regresja
+___
+
+## Regresja liniowa
+
+### Czym jest regresja liniowa?
+
+Regresja liniowa - czyli dlaczego nie oglądać tutoriali na Youtubie?
+
+Przypomnienie z poprzedniego spotkania:
+
+W zadaniu regresyjnym na podstawie zbioru cech obserwacji - w naszym przypadku danych samochodów
+
+```{r}
+library(tidyverse)
+library(kableExtra)
+dane <- mtcars
+head(dane[,-1]) %>% 
+    kbl() %>% 
+  kable_styling()
+  
+```
+
+Chcemy przewidywać zmienną typu ciągłego - w naszym przypadku spalanie
+
+```{r}
+head(dane[,1]) %>% 
+    kbl() %>% 
+  kable_styling()
+```
+
+Załóżmy że naszym celem jest ustalenie jak wygląda zależność pomiędzy liczbą koni mechanicznych a spalaniem
+
+```{r}
+ggplot(dane,aes(y = mpg, x = hp))+
+  geom_point()
+```
+
+W celu rozwiązania tego zadania i znalezienia "linii" która najlepiej odda tę zależność możemy posłużyć się regresją liniową.
+
+W naszym wypadku wzór byłby następujący:
+
+$$y = \beta_0 + \beta_1 \cdot \text{hp}$$
+
+Gdzie:
+
+-- $\beta_0$ jest wyrazem wolnym
+-- $\beta_1$ jest współczynnikiem dla liczby koni mechanicznych
+
+Co można uogólnić na dowolną liczbę cech których użyjemy do budowy modelu (oznaczone jako $x_i$)
+
+$$y = \beta_0 + \beta_1x_1 + \beta_2x_2+\cdots+\beta_nx_n$$
+
+### Jak wyznaczyć współczynniki?
+
+Na poprzednim spotkaniu mówiliśmy o funkcjach straty oraz optymalizacji ich wartości w celu znalezienia najlepszego modelu - te same zasady dotyczą regresji liniowej!
+
+Najpopularniejszą funkcją straty jest MSE, dla przypomnienia:
+
+$$MSE = \frac{1}{n}\sum_{i=0}^{n}(y_i-\hat{y}_i)^2, $$
+gdzie:
+
+-- $n$ - liczba obserwacji <br>
+-- $y_i$ - i-ta obserwacja <br>
+-- $\hat{y}_i$ - predykcja dla i-tej obserwacji
+
+Dla regresji z jedną zmienną będzie to:
+
+$$MSE = \frac{1}{n}\sum_{i=0}^{n}(y_i-\beta_0 + \beta_1x_1)^2, $$
+
+a dokładniej w naszym przypadku
+
+$$MSE = \frac{1}{n}\sum_{i=0}^{n}(y_i-\beta_0 + \beta_1\cdot\text{hp})^2, $$
+
+## Regresja w działaniu
+
+```{r}
+mod <- lm(dane$mpg~dane$hp,dane)
+```
+
+Linie regresji poprowadzone dla naszych obserwacji wyglądają następująco
+
+```{r}
+ggplot(dane,aes(y = mpg, x = hp))+
+  geom_point()+
+  #stat_smooth(method = "lm", se = F)+
+  geom_abline(intercept = 30.09886, slope = -0.06823, color = "blue", size = 1)+
+  geom_abline(intercept = 34, slope = -0.1,color = "red", size = 1)+
+  geom_abline(intercept = 25, slope = -0.06,color = "purple", size = 1)
+```
+
+Z tych trzech natomiast niebieska jest regresją dla której oba współczniki są dobrane poprzez optymalizacje funkcji starty
+
+Do określenia jakości naszego modelu możemy użyć metryki $R^2$ określanej jako kwadrat wyjaśnianej wriancji. Mowiąc prościej, ile procent zmienności zmiennej wynikowej jest uchwycone za pomocą wykorzystanych predyktorów.
+
+Metryka ta przyjmuje wartości od $0$ co oznacza że nie ma żadnej zależności do $1$ co oznacza że zależność jest idelanie liniowa
+
+Dla naszego modelu $R^2=0.59$ czyli za pomocą danych jedynie o koniach mechanicznych auta jesteśmy w stanie wyjaśnić około $60\%$ zmienności spalania.

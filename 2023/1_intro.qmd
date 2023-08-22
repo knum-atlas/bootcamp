@@ -1,7 +1,7 @@
 # Koło Naukowe Uczenia Maszynowego ATLAS - Bootcamp 2023 {.unnumbered}
 
 ---
-author: "Paweł Woźniak"
+author: "KNUM ATLAS"
 format: 
   html:
     toc: true
@@ -180,4 +180,6 @@ gdzie: <br>
 -- $y_i$ - i-ta obserwacja <br>
 -- $\hat{y}_i$ - predykcja dla i-tej obserwacji <br>
 
-  
+Poszukiwanie optymalnej (minimalnej) wartości funkcji straty można sobie wyobrazić jako "kule toczącą się po płaszczyźnie" poszukujęcej globalnego minimum (w naszym przykładzie "dołka który leży najniżej)
+
+<center>![](obrazki/example4.png){height=300} <br></center><br>
