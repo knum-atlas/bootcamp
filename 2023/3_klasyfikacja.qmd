@@ -1,0 +1,97 @@
+# Koło Naukowe Uczenia Maszynowego ATLAS - Bootcamp 2023 {.unnumbered}
+
+---
+author: "KNUM ATLAS"
+format: 
+  html:
+    toc: true
+    embed-resources: true
+    self-contained: true
+    page-layout: full
+date: "02-06-2023"
+---
+
+# Spotkanie 3 - Klasyfikacja
+___
+
+### Czym jest klasyfikacja?
+
+Klasyfikacja to zadanie w którym chcemy przypisać obserwacje do danej klasy na podstawie prawdopodobieństwa przynależności. Obserwacje przypisujemy do klasy z największym prwadopodobieństwem.
+
+Wyróżniamy kilka typów klasyfikacji:
+
+<center>![](obrazki/example5.png){height=400}</center>
+
+Najczęściej w klasycznych zadaniach uczenia maszynowego mamy do czynienia z klasyfikacją binarną i wieloklasową, natomiast wieloetykietowa jest częściej spotykana w zagadnieniach wizji komputerowej.
+
+### Regresja logistyczna
+
+Regresja logistyczna do modyfikacja regresji liniowej która zwraca zawsze prawdopodobieństwo z przedziału $[0,1]$ poprzez zastosowanie funkcji sigmoidalnej.
+
+Przypomnijmy wzór na regresję liniową z jednym predyktorem:
+
+$$y = \beta_0 + \beta_1x$$
+
+Ta sama funkcja wykorzystywana jest w regresji logistycznej w następujący sposób:
+
+$$p = \frac{e^{(\beta_0 + \beta_1x)}}{1+e^{(\beta_0 + \beta_1x)}} = \frac{1}{1+e^{-(\beta_0 + \beta_1x)}}$$
+
+w tym przypadku na wyjściu zamiast wartości zmiennej wynikowej mamy prawdopodobieństwo przynależności do klas.
+
+Regresja logistyczna w przypadku jednego predyktora wygląda następująco:
+
+::: {layout-ncol=1}
+![Grafika pochodzi z artykułu "Mitigation of nonlinear phase noise in single-channel coherent 16-QAM systems employing logistic regression"](obrazki/example6.png)
+:::
+
+### Drzewo decyzyjne
+
+Kolejnym algorytmem uczenia maszynowego jest drzewo decyzyjne, które może być stosowane zarówno do zadań klasyfikacyjnych jak i regresyjnych.
+
+Każde drzewo decyzyjne składa się z korzenia (ang. root), węzłów (ang. nodes) i liści (ang. leaves). Korzeniem nazywamy początkowy węzeł drzewa, z którego poprzez podziały (ang. splits) powstają kolejne węzły potomne. Końcowe węzły, które nie podlegają podziałom nazywamy liśćmi, a linie łączące węzły nazywamy gałęziami (ang. branches).
+
+::: {layout-ncol=1}
+![Grafika pochodzi z www.regenerativetoday.com](obrazki/example7.png)
+:::
+
+### Las losowy
+
+Ze względu na ograniczone możliwości predykcyjne pojedynczego drzewa w przypadku bardziej złożonych zadań przegrywały jakością z innymi modelami.
+
+W celu rozwiązania tego problemu postanowiono połączyć wiele pojedynczych drzew (słaby model) w jeden zagregowany model (silny model) - agregacje drzew decyzyjnych w jeden model nazywamy lasem losowym.
+
+::: {.callout-note}
+## Ważne
+
+W przypadku budowy pojedynczego drzewa do budowy zazwyczaj wykorzystujemy wszystkie dostępne predyktory, natomiast drzewa wchodzące w skład lasu budowane są z losowanego dla każdego drzewa podzbioru predyktorów.
+:::
+
+::: {layout-ncol=1}
+![Grafika pochodzi z www.turing.com](obrazki/example8.png)
+:::
+
+### Metryki
+
+1.    Confusion Matrix - nie jest to stricte metryka ale jest wizualizacją skuteczności przeprowadzonej klasyfikacji pomocnej w ocenie modelu
+
+::: {layout-ncol=1}
+![Grafika pochodzi z www.plat.ai](obrazki/example9.png)
+:::
+
+2.    Accuracy - stosunek poprawnie zaklasyfikowanych obserwacji do wszystkich obserwacji. Czyli na przykładzie wyżej przedstawionej macierzy klasyfikacji byłoby to:
+
+$$\frac{\text{TP}+\text{TN}}{\text{TP}+\text{TN}+\text{FP}+\text{FN}}$$
+
+3.    Specificity (True negative rate)
+
+$$\text{TNR} = \frac{\text{TN}}{\text{FP}+\text{TN}}$$
+
+4.    Sensitivity (True positive rate)
+
+$$\text{TPR} = \frac{\text{TP}}{\text{TP}+\text{FN}}$$
+
+5.    ROC AUC - 
+
+::: {layout-ncol=1}
+![Grafika pochodzi z www.plat.ai](obrazki/example10.png)
+:::
