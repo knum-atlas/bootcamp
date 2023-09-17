@@ -58,6 +58,8 @@ Celem Koła jest poszerzanie wiedzy studentów przede wszystkim na tematy związ
     <li> HackYeah 2023</li>
   </ul>
   <li> Noc inżynierów 2023 </li>
+  <li> Lubelski Festiwal Nauki 2023 </li>
+  <li> Data Saturday 2023 </li>
   <li> ML in PL Conference 2023 (soon) </li>
 </ul>
 

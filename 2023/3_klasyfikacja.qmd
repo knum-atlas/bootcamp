@@ -80,7 +80,7 @@ W przypadku budowy pojedynczego drzewa do budowy zazwyczaj wykorzystujemy wszyst
 
 2.    Accuracy - stosunek poprawnie zaklasyfikowanych obserwacji do wszystkich obserwacji. Czyli na przykładzie wyżej przedstawionej macierzy klasyfikacji byłoby to:
 
-$$\frac{\text{TP}+\text{TN}}{\text{TP}+\text{TN}+\text{FP}+\text{FN}}$$
+$$\text{Accuracy} = \frac{\text{TP}+\text{TN}}{\text{TP}+\text{TN}+\text{FP}+\text{FN}}$$
 
 3.    Specificity (True negative rate)
 
@@ -90,8 +90,32 @@ $$\text{TNR} = \frac{\text{TN}}{\text{FP}+\text{TN}}$$
 
 $$\text{TPR} = \frac{\text{TP}}{\text{TP}+\text{FN}}$$
 
-5.    ROC AUC - 
+5.    False Positive Rate
+
+$$FPR=\frac{FP}{FP+TN}=1-\text{specificity}$$
+
+6.    AUC-ROC - ROC to skrót od Receiver Operator Characteristic, AUC to Area Under Curve.
+Wykres ROC pokazuje nam jak klasyfikator radzi sobie przy różnych thresholdach. Im większe pole powierzchni pod krzywą tym lepiej.
 
 ::: {layout-ncol=1}
-![Grafika pochodzi z www.plat.ai](obrazki/example10.png)
+![Grafika pochodzi z www.plat.ai](obrazki/example10.png){width=500}
 :::
+
+#### Problem niezbalansowania klas
+Gdy mierzymy się z problemem klasyfikacji, często klasy wynikowe będą niezbalansowane. Na przykład tak jak w sytuacji, gdzie sprawdzamy awaryjność maszyn. Naturalnym jest, że maszyny częściej nie będą się psuły, niż będą ulegały awarii.
+
+::: {layout-ncol=1}
+![](obrazki/example11.png){width=500, fig-align="center"}
+:::
+
+W takich sytuacjach niektóre metryki, np. accuracy nie będą dobre do oceny jakości dopasowania modelu. Dlaczego? Ponieważ jeśli 9900 obserwacji pochodzi z klasy 0, a 100 obserwacji pochodzi z klasy 1, to model wskazujący ZAWSZE klasę 0 będzie miał accuracy na poziomie 99%. Dlatego przy wynikach metryk ważny jest kontekst.
+
+::: {.callout-note}
+## Informacja
+
+W przypadku niezbalansowania klas wynikowych zalecamy korzystanie z metryk takich jak AUC-ROC, J-index czy F1, aniżeli accuracy.
+:::
+
+Przy niezbalansowaniu klas, czy po prostu małej reprezentacji jednej z nich, modele mogą mieć problemy z odpowiednim znalezieniem wzorców i nauczeniem się przewidywania tej klasy.
+
+Czy da się coś z tym zrobić? Tak, istnieją metody undersamplingu i oversamplingu, takie jak SMOTE czy ROSE, które pozwalają nam na radzenie sobie z tym problemem.
