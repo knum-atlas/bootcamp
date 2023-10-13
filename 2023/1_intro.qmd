@@ -64,20 +64,21 @@ Celem Koła jest poszerzanie wiedzy studentów przede wszystkim na tematy związ
 </ul>
 
 ### 4. Dołączenie do Koła
-Pod koniec ostatniego spotkania pojawi się link do formularzu rejestracyjnego. Po wypełnieniu go, otrzymacie maila z zaproszeniem na krótką rozmowę rekrutacyjną. Kilka dni po rozmowie otrzymacie maila z informacją dotyczącą przyjęcia lub nieprzyjęcia w szeregi Koła.
+Zainteresowanych dołączeniem do Koła prosimy o wypełnienie formularza.
+<center>![](obrazki/qr-code.png){height=400} <br><br></center>
+<!-- Po wypełnieniu go, otrzymacie maila z zaproszeniem na krótką rozmowę rekrutacyjną. Kilka dni po rozmowie otrzymacie maila z informacją dotyczącą przyjęcia lub nieprzyjęcia w szeregi Koła. -->
 
 ## 2. Struktura bootcampu
 <ul>
-  <li> Odbędzie się 5 spotkań </li>
+  <li> Odbędą się 4 spotkania </li>
   <ol>
     <li> Wprowadzenie </li>
     <li> Regresja </li>
     <li> Klasyfikacja </li>
-    <li> Dane - sztuczki i rady </li>
-    <li> Sieć neuronowa </li>
+    <li> Podsumowanie & feedback </li>
   </ol>
   <li> Każde spotkanie ma przygotowaną część teoretyczną oraz praktyczną, zarówno w R jak i Pythonie. </li>
-  <li> Po trzecim spotkaniu udostępnimy konkurs na Kaggle'u </li>
+  <li> Po trzecim spotkaniu udostępnimy konkurs, w którym będziecie mogli sprawdzić swoje umiejętności </li>
   
 ## 3. Dane
 #### Podstawowe pojęcia
