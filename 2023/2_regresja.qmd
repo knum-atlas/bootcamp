@@ -12,7 +12,8 @@ date: "02-06-2023"
 ---
 
 # Spotkanie 2 - Regresja
-___
+
+------------------------------------------------------------------------
 
 ## Regresja liniowa
 
@@ -46,7 +47,6 @@ head(dane) %>%
   column_spec(2, background = "green")
 ```
 
-
 Załóżmy że naszym celem jest ustalenie jak wygląda zależność pomiędzy liczbą koni mechanicznych a spalaniem
 
 ```{r}
@@ -76,12 +76,9 @@ Na poprzednim spotkaniu mówiliśmy o funkcjach straty oraz optymalizacji ich wa
 
 Najpopularniejszą funkcją straty jest MSE, dla przypomnienia:
 
-$$MSE = \frac{1}{n}\sum_{i=0}^{n}(y_i-\hat{y}_i)^2, $$
-gdzie:
+$$MSE = \frac{1}{n}\sum_{i=0}^{n}(y_i-\hat{y}_i)^2, $$ gdzie:
 
--- $n$ - liczba obserwacji <br>
--- $y_i$ - i-ta obserwacja <br>
--- $\hat{y}_i$ - predykcja dla i-tej obserwacji
+-- $n$ - liczba obserwacji <br> -- $y_i$ - i-ta obserwacja <br> -- $\hat{y}_i$ - predykcja dla i-tej obserwacji
 
 Dla regresji z jedną zmienną będzie to:
 
@@ -133,7 +130,7 @@ Wzór na MSE będzie wyglądał podobnie jak dla modelu liniowego z tą różnic
 
 $$MSE = \frac{1}{n}\sum_{i=0}^{n}(y_i-\beta_0 + \beta_1\cdot\text{hp} + \beta_2 \cdot \text{hp}^2)^2, $$
 
-::: {.callout-warning}
+::: callout-warning
 ## UWAGA
 
 Przy włączaniu predyktora w wyższej potędze, musi on być włączony również we wszystkich niższych potęgach.
@@ -156,11 +153,15 @@ Model ten charakteruzyje się $R^2=0.76$ co czyni go lepszym od poprzedniego pon
 Ale czy na pewno jest to aż tak dobry model?
 
 <details>
-  <summary>Odpowiedzi</summary>
+
+<summary>Odpowiedzi</summary>
+
 Do 200-250 koni mechanicznych zależność rzeczywiście jest lepiej odwzorowana niż w modelu liniowym, natomiast powyżej tej wartości spodziewamy się że spalanie powinno dalej rosnąć natomiast model powyżej 250 koni mechanicznych przewiduje, że spalanie będzie maleć.
 
 Może do doprowadzić do sytuacji gdzie wprowadzona obserwacja spoza zakresu uczenia np. samochód z 500 koniami mechanicznymi z takiego modelu może uzyskać predykcje spalania podobną jak dla samochodu ze 100 koniami.
+
 </ol>
+
 </details>
 
 Jak możemy w takim razie poprawć ten model?
@@ -205,8 +206,32 @@ Ten model cechuje się $R^2 = 0.85$ czyli uzyskaliśmy w ten sposób $10\%$ wię
 
 ## Uwagi końcowe
 
--   Regresja wielomianowa i regresja wieloraka są również regresjami liniowymi
+-   Regresja wielomianowa i regresja wieloraka są również regresjami liniowymi.
 
 -   W rzeczywistości lepszą miarą od $R^2$ jest jego skorygowana wersja oznaczana jako $R^2_{adj}$ ponieważ zwykłe $R^2$ będzie rosło pomimo dodawania do modelu nieistotnych predyktorów.
 
+- W regresji można stosować regularyzację np. Ridge lub LASSO w celu uniknięcia nadmiernego dopasowania.
+
 -   Regresja liniowa ma wiele założeń które trzeba spełnić aby móc poprawnie wnioskować na jej podstawie. W zadaniu predykcyjnym (tak jak w naszym przypadku) nie musimy się nimi przejmować ponieważ chcemy tylko aby model jak najlepiej przewidywał zmienną wynikową.
+
+## Zadanie
+
+Do dyspozycji macie dane ([link](https://drive.google.com/drive/folders/1rCxMjU5-vAn_LzvlUr4f9V3_JVVvppQd?usp=drive_link)) dotyczące przewidywanej długości życia zebrane w 193 państwach na przestrzeni 15 lat.
+
+Dane zawierają 18 kolumn z takimi informacjami jak:
+
+-   Odsetek zgonów w różnym wieku
+
+-   Szczepienia noworodków
+
+-   Wskaźniki w kontekście państwa (np. GDP, wydatki na służbe zdrowia)
+
+Zbudujcie model regresji liniowej przewidujący długość życia na podstawie dostępnych kolumn. Jakie wyszło RMSE? Czy błąd jest wysoki czy niski?
+
+Dla zaawansowanych:
+
+-   Uzupełnić braki danych.
+
+-   Wykonać model w `tidymodels`.
+
+-   Dodać regularyzację.

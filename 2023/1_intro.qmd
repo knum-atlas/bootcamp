@@ -9,90 +9,159 @@ format:
     self-contained: true
     page-layout: full
 date: "02-06-2023"
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-
 # Spotkanie 1 - Wprowadzenie
-___
+
+------------------------------------------------------------------------
 
 ## 1. O Kole
-<center>![](obrazki/Atlas_logotyp_czarne.png){height=400} <br></center>
 
+<center>![](obrazki/Atlas_logotyp_czarne.png){height="400"}
+<br></center>
 
 ### 1. Podstawowe informacje dotyczące Koła
 
 <ul>
-  <li> Koło zostało założone w lipcu 2023 r. </li>
-  <li> Funkcjonuje przy Katedrze Matematyki Stosowanej Wydziału Podstaw Techniki </li>
-  <li> Opiekunem Koła jest mgr inż. Magdalena Piłat-Rożek</li>
-  <li> Zarząd na ten rok akademicki:</li>
-  <ul>
-    <li> Paweł Woźniak - Prezes</li>
-    <li> Kacper Wójtowicz - Wiceprezes</li>
-    <li> Patryk Marek - Sekretarz</li>
-    <li> Michał Koziński - Skarbnik</li>
-  </ul>
+
+<li>Koło zostało założone w lipcu 2023 r.</li>
+
+<li>Funkcjonuje przy Katedrze Matematyki Stosowanej Wydziału Podstaw
+Techniki</li>
+
+<li>Opiekunem Koła jest mgr inż. Magdalena Piłat-Rożek</li>
+
+<li>Zarząd na ten rok akademicki:</li>
+
+<ul>
+
+<li>Paweł Woźniak - Prezes</li>
+
+<li>Kacper Wójtowicz - Wiceprezes</li>
+
+<li>Patryk Marek - Sekretarz</li>
+
+<li>Michał Koziński - Skarbnik</li>
+
 </ul>
+
+</ul>
+
 <br>
 
 ### 2. Cele Koła
-Celem Koła jest poszerzanie wiedzy studentów przede wszystkim na tematy związane z uczeniem maszynowym oraz sztuczną inteligencją. Chcemy tego dokonać poprzez:
+
+Celem Koła jest poszerzanie wiedzy studentów przede wszystkim na tematy
+związane z uczeniem maszynowym oraz sztuczną inteligencją. Chcemy tego
+dokonać poprzez:
+
 <ul>
-  <li> Organizację corocznych bootcampów - takich jak ten! </li>
-  <li> Study Groups - podzielenie członków Koła na grupy, które skupiałyby się bardziej szczegółowo na jakichś tematach, np. Computer Vision, NLP itd. </li>
-  <li> Wyjazdy na Hackathony oraz konferencje związane z ML/AI </li>
-  <li> Udział w projektach naukowych i dydaktycznych Katedry Matematyki Stosowanej </li>
-  <li> Organizację prelekcji </li>
+
+<li>Organizację corocznych bootcampów - takich jak ten!</li>
+
+<li>Study Groups - podzielenie członków Koła na grupy, które skupiałyby
+się bardziej szczegółowo na jakichś tematach, np. Computer Vision, NLP
+itd.</li>
+
+<li>Wyjazdy na Hackathony oraz konferencje związane z ML/AI</li>
+
+<li>Udział w projektach naukowych i dydaktycznych Katedry Matematyki
+Stosowanej</li>
+
+<li>Organizację prelekcji</li>
+
 </ul>
 
 ### 3. Dotychczasowe aktywności
+
 <ul>
-  <li> Hackathony </li>
-  <ul>
-    <li> KNUM x Golem Hackathon 2022 </li>
-    <li> BEST Hacking League 2023 (3. miejsce w kategorii Artificial Intelligence) </li>
-    <li> HackYeah 2023</li>
-  </ul>
-  <li> Noc inżynierów 2023 </li>
-  <li> Lubelski Festiwal Nauki 2023 </li>
-  <li> Data Saturday 2023 </li>
-  <li> ML in PL Conference 2023 (soon) </li>
+
+<li>Hackathony</li>
+
+<ul>
+
+<li>KNUM x Golem Hackathon 2022</li>
+
+<li>BEST Hacking League 2023 (3. miejsce w kategorii Artificial
+Intelligence)</li>
+
+<li>HackYeah 2023</li>
+
+</ul>
+
+<li>Noc inżynierów 2023</li>
+
+<li>Lubelski Festiwal Nauki 2023</li>
+
+<li>Data Saturday 2023</li>
+
+<li>ML in PL Conference 2023 (soon)</li>
+
 </ul>
 
 ### 4. Dołączenie do Koła
+
 Zainteresowanych dołączeniem do Koła prosimy o wypełnienie formularza.
-<center>![](obrazki/qr-code.png){height=400} <br><br></center>
+
+<center>![](obrazki/qr-code.png){height="400"} <br><br></center>
+
 <!-- Po wypełnieniu go, otrzymacie maila z zaproszeniem na krótką rozmowę rekrutacyjną. Kilka dni po rozmowie otrzymacie maila z informacją dotyczącą przyjęcia lub nieprzyjęcia w szeregi Koła. -->
 
 ## 2. Struktura bootcampu
+
 <ul>
-  <li> Odbędą się 4 spotkania </li>
-  <ol>
-    <li> Wprowadzenie </li>
-    <li> Regresja </li>
-    <li> Klasyfikacja </li>
-    <li> Podsumowanie & feedback </li>
-  </ol>
-  <li> Każde spotkanie ma przygotowaną część teoretyczną oraz praktyczną, zarówno w R jak i Pythonie. </li>
-  <li> Po trzecim spotkaniu udostępnimy konkurs, w którym będziecie mogli sprawdzić swoje umiejętności </li>
-  
-## 3. Dane
-#### Podstawowe pojęcia
-<center>![](obrazki/mem2.png){height=400} <br><br></center>
-Poniższe dane pochodzą ze zbioru `penguins` z pakietu `palmerpenguins` w R. <br>
-Korzystając z poniższej tabeli odpowiemy sobie teraz na kilka podstawowych pytań:
+
+<li>Odbędą się 4 spotkania</li>
+
 <ol>
-  <li> Czym jest obserwacja? </li>
-  <li> Czym jest cecha? </li>
-  <li> Jakie wyróżniamy typy cech? </li>
-  <li> Czym jest predyktor/zmienna niezależna? </li>
-  <li> Czym jest target/zmienna niezależna? </li>
+
+<li>Wprowadzenie</li>
+
+<li>Regresja</li>
+
+<li>Klasyfikacja</li>
+
+<li>Podsumowanie & feedback</li>
+
 </ol>
-  
+
+<li>Każde spotkanie ma przygotowaną część teoretyczną oraz praktyczną,
+zarówno w R jak i Pythonie.</li>
+
+<li>Po trzecim spotkaniu udostępnimy konkurs, w którym będziecie mogli
+sprawdzić swoje umiejętności</li>
+
+## 3. Dane
+
+#### Podstawowe pojęcia
+
+<center>![](obrazki/mem2.png){height="400"} <br><br></center>
+
+Poniższe dane pochodzą ze zbioru `penguins` z pakietu `palmerpenguins` w
+R. <br> Korzystając z poniższej tabeli odpowiemy sobie teraz na kilka
+podstawowych pytań:
+
+<ol>
+
+<li>Czym jest obserwacja?</li>
+
+<li>Czym jest cecha?</li>
+
+<li>Jakie wyróżniamy typy cech?</li>
+
+<li>Czym jest predyktor/zmienna niezależna?</li>
+
+<li>Czym jest target/zmienna niezależna?</li>
+
+</ol>
+
 ```{r}
 library(kableExtra)
 ```
@@ -104,85 +173,214 @@ head(penguins) %>%
   kable_styling()
   
 ```
-<br>
-<details>
-  <summary>Odpowiedzi</summary>
-  <ol>
-  <li> Obserwacja to pojedynczy wiersz w tabeli.</li>
-  <li> Cecha to pojedyncza kolumna, służy do opisu danej obserwacji, w naszej tabeli jest to np. `body_mass_g` lub `Species`. </li>
-  <li> Cechy, zwane też zmiennymi, dzielimy na: </li>
-    <ul> 
-      <li> Zmienne typu ciągłego - przyjmują dowolne wartości liczbowe z $\mathbb{R}$, np. `bill_depth_mm`. </li>
-      <li> Zmienne typu jakościowego - są to nieporównywalne między sobą stany, gdzie jeden nie jest lepszy od drugiego, np. `Species`.</li>
-      <li> Zmienne typu porządkowego - są to zmienne typu jakościowego, lecz mają ustalony porządek, w naszym zbiorze nie znajduje się taka zmienna, ale mogłoby to być np. `wykształcenie`, gdzie podstawowe < średnie < wyższe.</li>
-    </ul>
 
-  <li> Predyktorem nazywamy cechę, która wykorzystywana będzie do przewidywania wartości zmiennej wynikowej (targetu/zmiennej niezależnej), w naszej tabelce jest to np. zmienna `body_mass_g`. </li>
-  <li> Inaczej zmienna wynikowa. Cecha, którą będziemy przewidywać, w rzeczywistości jest to wartość nieznana. W powyższym zbiorze może to być `Species`, czyli gatunek pingwina. </li>
+<br>
+
+<details>
+
+<summary>Odpowiedzi</summary>
+
+<ol>
+
+<li>Obserwacja to pojedynczy wiersz w tabeli.</li>
+
+<li>Cecha to pojedyncza kolumna, służy do opisu danej obserwacji, w
+naszej tabeli jest to np. `body_mass_g` lub `Species`.</li>
+
+<li>Cechy, zwane też zmiennymi, dzielimy na:</li>
+
+<ul>
+
+<li>Zmienne typu ciągłego - przyjmują dowolne wartości liczbowe z
+$\mathbb{R}$, np. `bill_depth_mm`.</li>
+
+<li>Zmienne typu jakościowego - są to nieporównywalne między sobą stany,
+gdzie jeden nie jest lepszy od drugiego, np. `Species`.</li>
+
+<li>Zmienne typu porządkowego - są to zmienne typu jakościowego, lecz
+mają ustalony porządek, w naszym zbiorze nie znajduje się taka zmienna,
+ale mogłoby to być np. `wykształcenie`, gdzie podstawowe \< średnie \<
+wyższe.</li>
+
+</ul>
+
+<li>Predyktorem nazywamy cechę, która wykorzystywana będzie do
+przewidywania wartości zmiennej wynikowej (targetu/zmiennej
+niezależnej), w naszej tabelce jest to np. zmienna `body_mass_g`.</li>
+
+<li>Inaczej zmienna wynikowa. Cecha, którą będziemy przewidywać, w
+rzeczywistości jest to wartość nieznana. W powyższym zbiorze może to być
+`Species`, czyli gatunek pingwina.</li>
+
 </ol>
+
 </details>
 
 #### Podział danych
-<center>![](obrazki/mem3.jpeg){height=400} <br></center> <br>
-Dane dzielimy na zbiór treningowy i testowy. Zbiór treningowy zazwyczaj stanowi większość wszystkich obserwacji, często jest to 70-90%, zależnie od liczby obserwacji, którymi dysponujemy. Ten pierwszy wykorzystujemy do nauczenia modelu. Wszystkie operacje, np. normalizacja, wykonujemy tylko na zbiorze uczącym.<br> Do zbioru testowego wracamy dopiero, gdy mamy gotowy model. Używamy go w celu określenia skuteczności naszego modelu. Dlaczego to ważne?
+
+<center>![](obrazki/mem3.jpeg){height="400"} <br></center>
+
+<br> Dane dzielimy na zbiór treningowy i testowy. Zbiór treningowy
+zazwyczaj stanowi większość wszystkich obserwacji, często jest to
+70-90%, zależnie od liczby obserwacji, którymi dysponujemy. Ten pierwszy
+wykorzystujemy do nauczenia modelu. Wszystkie operacje, np.
+normalizacja, wykonujemy tylko na zbiorze uczącym.<br> Do zbioru
+testowego wracamy dopiero, gdy mamy gotowy model. Używamy go w celu
+określenia skuteczności naszego modelu. Dlaczego to ważne?
 
 #### Przeuczenie i niedouczenie
-<center>![](obrazki/mem4.jpg){height=400} <br></center> <br>
-W rzeczywistości w zadaniach modelowania możemy mieć do czynienia z trzema sytuacjami.
+
+<center>![](obrazki/mem4.jpg){height="400"} <br></center>
+
+<br> W rzeczywistości w zadaniach modelowania możemy mieć do czynienia z
+trzema sytuacjami.
+
 <ol>
-  <li> Model jest niedouczony - jest słabo dopasowany zarówno do danych treningowych, jak i testowych. Słabe wyniki predykcji w tym przypadku mogą wynikać z czynników takich jak:
-  </li>
-  <ul>
-  <li> Zbyt mały zbiór uczący </li>
-  <li> Za mało predyktorów </li>
-  <li> Dostępne predyktory nie mówią wystarczająco dużo o zmiennej wynikowej. </li>
-  <li> Model jest zbyt prosty, nie jest w stanie odwzorować skomplikowanych zależności pomiędzy cechami. </li>
-  </ul>
-  <li> Model jest dobrze nauczony - w takiej sytuacji model osiąga dobre, zbliżone wyniki na zbiorze treningowym i testowym. </li>
-  <li> Model jest przeuczony - w tej sytuacji model osiąga zadowalające wyniki na zbiorze treningowym, natomiast ze zbiorem testowym radzi sobie dużo gorzej. Przeuczenie może wynikać z takich rzeczy jak:</li>
-  <ul> 
-  <li> Zbyt mały zbiór uczący </li>
-  <li> Model jest zbyt złożony </li>
-  </ul>
+
+<li>Model jest niedouczony - jest słabo dopasowany zarówno do danych
+treningowych, jak i testowych. Słabe wyniki predykcji w tym przypadku
+mogą wynikać z czynników takich jak:</li>
+
+<ul>
+
+<li>Zbyt mały zbiór uczący</li>
+
+<li>Za mało predyktorów</li>
+
+<li>Dostępne predyktory nie mówią wystarczająco dużo o zmiennej
+wynikowej.</li>
+
+<li>Model jest zbyt prosty, nie jest w stanie odwzorować skomplikowanych
+zależności pomiędzy cechami.</li>
+
+</ul>
+
+<li>Model jest dobrze nauczony - w takiej sytuacji model osiąga dobre,
+zbliżone wyniki na zbiorze treningowym i testowym.</li>
+
+<li>Model jest przeuczony - w tej sytuacji model osiąga zadowalające
+wyniki na zbiorze treningowym, natomiast ze zbiorem testowym radzi sobie
+dużo gorzej. Przeuczenie może wynikać z takich rzeczy jak:</li>
+
+<ul>
+
+<li>Zbyt mały zbiór uczący</li>
+
+<li>Model jest zbyt złożony</li>
+
+</ul>
+
 </ol>
-::: {layout-ncol=1}
-![Przykład pochodzi z www.towardsdatascience.com](obrazki/example1.png){fig-alt="A drawing of an elephant."}
+
+::: {layout-ncol="1"}
+![Przykład pochodzi z
+www.towardsdatascience.com](obrazki/example1.png){fig-alt="A drawing of an elephant."}
 :::
 
-
 ## 4. Czym jest uczenie maszynowe, czyli jak uczą się modele?
-<center>![](obrazki/mem1.png){height=400} <br></center><br>
-Tradycyjne programowanie algorytmów polega na tworzeniu zasad w celu otrzymania wyniku. W uczeniu maszynowym pokazujemy specjalnemu algorytmowi dane, wraz z wynikiem w celu znalezienia reguł, wzorców, pozwalających na otrzymywanie odpowiedzi dla nowych, nieznanych obserwacji. <br>
-W tradycyjnym programowaniu jeśli pojawiłaby się nowa obserwacja, nie wpasowująca się w tworzone reguły, nie będziemy w stanie otrzymać poprawnej odpowiedzi.
-<center>![](obrazki/example2.png){height=400} <br></center><br>
-Algorytmy uczenia maszynowego możemy podzielić na nadzorowane (ang. <i>supervised</i>) i nienadzorowane (ang. <i>unsupervised</i>). W uczeniu nadzorowanym mamy "nauczyciela", który najczęściej jest zmienną wynikową i mówi algorytmowi jaka jest odpowiedź przy zadanych wartościach cech, co pozwala ustalić mu zależności. Na przykład, jeśli chcemy wykryć, czy dany mail jest spamem, czy nie i dysponujemy zbiorem, który zawiera wiadomości z oznaczeniem, czy były spamem, czy nie, wtedy skorzystamy z algorytmów uczenia nadzorowanego. <br>
 
-W uczeniu nienadzorowanym nie mamy "nauczyciela", dysponujemy obserwacjami bez zmiennej wynikowej. Z takich algorytmów korzystamy, np. w algorytmach grupujących, gdzie wcześniej nie znamy grup, do których należą obserwacje, czyli nie ma nauczyciela. Algorytmów grupujących używamy, żeby np. stwierdzić, że żywieniowo Polska jest bardziej podobna do Ukrainy, a Hiszpania jest bardziej podobna do Portugalii. <br>
+<center>![](obrazki/mem1.png){height="400"} <br></center>
 
-<center>![](obrazki/example3.svg){height=300} <br></center><br>
+<br> Tradycyjne programowanie algorytmów polega na tworzeniu zasad w
+celu otrzymania wyniku. W uczeniu maszynowym pokazujemy specjalnemu
+algorytmowi dane, wraz z wynikiem w celu znalezienia reguł, wzorców,
+pozwalających na otrzymywanie odpowiedzi dla nowych, nieznanych
+obserwacji. <br> W tradycyjnym programowaniu jeśli pojawiłaby się nowa
+obserwacja, nie wpasowująca się w tworzone reguły, nie będziemy w stanie
+otrzymać poprawnej odpowiedzi.
+
+<center>![](obrazki/example2.png){height="400"} <br></center>
+
+<br> Algorytmy uczenia maszynowego możemy podzielić na nadzorowane (ang.
+<i>supervised</i>) i nienadzorowane (ang. <i>unsupervised</i>). W
+uczeniu nadzorowanym mamy "nauczyciela", który najczęściej jest zmienną
+wynikową i mówi algorytmowi jaka jest odpowiedź przy zadanych
+wartościach cech, co pozwala ustalić mu zależności. Na przykład, jeśli
+chcemy wykryć, czy dany mail jest spamem, czy nie i dysponujemy zbiorem,
+który zawiera wiadomości z oznaczeniem, czy były spamem, czy nie, wtedy
+skorzystamy z algorytmów uczenia nadzorowanego. <br>
+
+W uczeniu nienadzorowanym nie mamy "nauczyciela", dysponujemy
+obserwacjami bez zmiennej wynikowej. Z takich algorytmów korzystamy, np.
+w algorytmach grupujących, gdzie wcześniej nie znamy grup, do których
+należą obserwacje, czyli nie ma nauczyciela. Algorytmów grupujących
+używamy, żeby np. stwierdzić, że żywieniowo Polska jest bardziej podobna
+do Ukrainy, a Hiszpania jest bardziej podobna do Portugalii. <br>
+
+<center>![](obrazki/example3.svg){height="300"} <br></center>
+
+<br>
 
 #### Regresja i klasyfikacja
-Algorytmy uczenia nadzorowanego możemy dalej podzielić na algorytmy regresyjne i klasyfikacyjne. Zadania regresyjne służą przewidywaniu ciągłych wartości, np. ceny mieszkania, miesięcznych wydatków klienta w naszym sklepie itd. Zadania klasyfikacyjne służą przewidywaniu wartości dyskretnych, np. czy klient kupi nasz produkt lub czy wiadomość jest spamem.
+
+Algorytmy uczenia nadzorowanego możemy dalej podzielić na algorytmy
+regresyjne i klasyfikacyjne. Zadania regresyjne służą przewidywaniu
+ciągłych wartości, np. ceny mieszkania, miesięcznych wydatków klienta w
+naszym sklepie itd. Zadania klasyfikacyjne służą przewidywaniu wartości
+dyskretnych, np. czy klient kupi nasz produkt lub czy wiadomość jest
+spamem.
 
 #### Funkcja straty
-<figure class="quote"> <blockquote> A way to measure whether the algorithm is doing a good job — This is necessary to determine the distance between the algorithm’s current output and its expected output. The measurement is used as a feedback signal to adjust the way the algorithm works. This adjustment step is what we call learning.  </blockquote>
-<figcaption> François Chollet, <cite> Deep learning with Python (2017), Manning, chapter 1 p.6 </cite></figcaption></figure>
 
-Funkcja straty jest funkcją, która oblicza odległość pomiędzy obecną przewidywaną wartością, a oczekiwaną. Funkcja straty ewaluuje to, jak dobrze algorytm modeluje dane. Funkcje straty używane są zarówno dla zadań regresyjnych, jak i klasyfikacyjnych. 
+<figure class="quote">
+
+<blockquote>A way to measure whether the algorithm is doing a good job
+--- This is necessary to determine the distance between the algorithm's
+current output and its expected output. The measurement is used as a
+feedback signal to adjust the way the algorithm works. This adjustment
+step is what we call learning.</blockquote>
+
+<figcaption>François Chollet, <cite> Deep learning with Python (2017),
+Manning, chapter 1 p.6 </cite></figcaption>
+
+</figure>
+
+Funkcja straty jest funkcją, która oblicza odległość pomiędzy obecną
+przewidywaną wartością, a oczekiwaną. Funkcja straty ewaluuje to, jak
+dobrze algorytm modeluje dane. Funkcje straty używane są zarówno dla
+zadań regresyjnych, jak i klasyfikacyjnych.
 
 ##### Mean Square Error Loss
-Błąd średniokwadratowy jest prostą i bardzo popularną funkcją straty. Używany jest do zadań regresyjnych. Jest to suma kwadratów różnic pomiędzy przewidywaną, a prawdziwą wartością. Wzór na MSE:
-$$MSE = \frac{1}{n}\sum_{i=0}^{n}(y_i-\hat{y}_i)^2, $$
-gdzie: <br>
-<!-- <ul> -->
-<!--   <li> $n$ - liczba obserwacji </li> -->
+
+Błąd średniokwadratowy jest prostą i bardzo popularną funkcją straty.
+Używany jest do zadań regresyjnych. Jest to suma kwadratów różnic
+pomiędzy przewidywaną, a prawdziwą wartością. Wzór na MSE:
+$$MSE = \frac{1}{n}\sum_{i=0}^{n}(y_i-\hat{y}_i)^2, $$ gdzie: <br>
+<!-- <ul> --> <!--   <li> $n$ - liczba obserwacji </li> -->
 <!--   <li> $y_i$ - i-ta obserwacja </li> -->
 <!--   <li> $\hat{y}_i$ - predykcja dla i-tej obserwacji </li> -->
-<!-- </ul> -->
--- $n$ - liczba obserwacji <br>
--- $y_i$ - i-ta obserwacja <br>
--- $\hat{y}_i$ - predykcja dla i-tej obserwacji <br>
+<!-- </ul> --> -- $n$ - liczba obserwacji <br> -- $y_i$ - i-ta
+obserwacja <br> -- $\hat{y}_i$ - predykcja dla i-tej obserwacji <br>
 
-Poszukiwanie optymalnej (minimalnej) wartości funkcji straty można sobie wyobrazić jako "kule toczącą się po płaszczyźnie" poszukujęcej globalnego minimum (w naszym przykładzie "dołka który leży najniżej)
+Poszukiwanie optymalnej (minimalnej) wartości funkcji straty można sobie
+wyobrazić jako "kule toczącą się po płaszczyźnie" poszukujęcej
+globalnego minimum (w naszym przykładzie "dołka który leży najniżej)
 
-<center>![](obrazki/example4.png){height=300} <br></center><br>
+<center>![](obrazki/example4.png){height="300"} <br></center>
+
+<br>
+
+## Z czego będziemy korzystali?
+
+### R
+
+1.  Język R - dostępny do pobrania na CRAN
+    ([link](https://cran.rstudio.com/)).
+
+2.  IDE - środowisko programistyczne, polecamy Rstudio
+    ([link](https://posit.co/download/rstudio-desktop/)).
+
+3.  Rtools - zestaw narzędzi do R (wersja dla Windows:
+    [link](https://cran.r-project.org/bin/windows/Rtools/)).
+
+4.  Biblioteki - będziemy instalować na bieżąco, najwżaniejsze będą
+    `tidyverse` i `tidymodels`.
+
+### Python
+
+1.  Język Python - polecamy dystrybucję Anaconda
+    ([link](https://www.anaconda.com/download))
+
+2.  IDE - głównie Jupyter Notebook (instalowany razem z Anacondą), polecamy też Visual Studio Code i PyCharm.
+
+3.  Biblioteki - będziemy instalować na bieżąco, najważniejsze będą: `pandas`, `NumPy`, `Matplotlib` i `scikit-learn`
