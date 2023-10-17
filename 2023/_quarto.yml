@@ -12,7 +12,7 @@ book:
     search: true
   chapters:
     - index.qmd
-#     - intro.qmd
+    - 1_intro.qmd
 #     - summary.qmd
 #     - references.qmd
 # 
