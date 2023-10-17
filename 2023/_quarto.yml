@@ -11,7 +11,7 @@ book:
     style: docked
     search: true
   chapters:
-    - index.qmd
+    #- index.qmd
     - 1_intro.qmd
 #     - summary.qmd
 #     - references.qmd
