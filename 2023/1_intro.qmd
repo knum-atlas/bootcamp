@@ -15,7 +15,7 @@ editor:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
 ```
 
 # Spotkanie 1 - Wprowadzenie
@@ -33,8 +33,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 <li>Koło zostało założone w lipcu 2023 r.</li>
 
-<li>Funkcjonuje przy Katedrze Matematyki Stosowanej Wydziału Podstaw
-Techniki</li>
+<li>Funkcjonuje przy Katedrze Matematyki Stosowanej Wydziału Matematyki i Informatyki Technicznej</li>
 
 <li>Opiekunem Koła jest mgr inż. Magdalena Piłat-Rożek</li>
 
