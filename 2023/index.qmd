@@ -1,6 +1,6 @@
 # Preface {.unnumbered}
 
-To jest projekt **Bootcamp 2023 by ATLAS**
+To jest projekt **Bootcamp 2023 by KNUM ATLAS**
 
 ```{r}
 

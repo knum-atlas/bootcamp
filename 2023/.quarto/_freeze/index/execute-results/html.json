@@ -1,7 +1,7 @@
 {
-  "hash": "c7bdbb7041a451fca3d13aa1de10e2e7",
+  "hash": "e5bbc29ceac3ad2b2e313bb8ff2ca53b",
   "result": {
-    "markdown": "# Preface {.unnumbered}\n\nTo jest projekt **Bootcamp 2023 by ATLAS**\n\n\n::: {.cell}\n\n:::\n",
+    "markdown": "# Preface {.unnumbered}\n\nTo jest projekt **Bootcamp 2023 by KNUM ATLAS**\n\n\n::: {.cell}\n\n:::\n",
     "supporting": [],
     "filters": [
       "rmarkdown/pagebreak.lua"
