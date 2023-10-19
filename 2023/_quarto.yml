@@ -3,9 +3,9 @@ project:
   output-dir: docs
 
 book:
-  title: "atlas_bootcamp2023"
-  author: "ATLAS"
-  date: "November 2023"
+  title: "Bootcamp 2023"
+  author: "KNUM ATLAS"
+  date: "October 2023"
   date-format: "MMMM YYYY"
   sidebar:
     style: docked
