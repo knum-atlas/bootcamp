@@ -216,7 +216,7 @@ Ten model cechuje się $R^2 = 0.85$ czyli uzyskaliśmy w ten sposób $10\%$ wię
 
 ## Zadanie
 
-Do dyspozycji macie dane ([link](https://drive.google.com/drive/folders/1rCxMjU5-vAn_LzvlUr4f9V3_JVVvppQd?usp=drive_link)) dotyczące przewidywanej długości życia zebrane w 193 państwach na przestrzeni 15 lat.
+Do dyspozycji macie dane ([link](https://drive.google.com/drive/u/3/folders/1DjpxNS2jocC_K4KK_slbXa-MLiPLp5oD)) dotyczące przewidywanej długości życia zebrane w 193 państwach na przestrzeni 15 lat.
 
 Dane zawierają 18 kolumn z takimi informacjami jak:
 
