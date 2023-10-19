@@ -51,49 +51,49 @@
   {
     "objectID": "2_regresja.html",
     "href": "2_regresja.html",
-    "title": "Koło Naukowe Uczenia Maszynowego ATLAS - Bootcamp 2023",
+    "title": "Regresja",
     "section": "",
     "text": "Spotkanie 2 - Regresja"
   },
   {
     "objectID": "2_regresja.html#regresja-liniowa",
     "href": "2_regresja.html#regresja-liniowa",
-    "title": "Koło Naukowe Uczenia Maszynowego ATLAS - Bootcamp 2023",
+    "title": "Regresja",
     "section": "Regresja liniowa",
     "text": "Regresja liniowa\n\nCzym jest regresja liniowa?\nPrzypomnienie z poprzedniego spotkania:\nW zadaniu regresyjnym na podstawie zbioru cech obserwacji - w naszym przypadku danych samochodów\n\n\n\n\n \n  \n      \n    mpg \n    cyl \n    disp \n    hp \n    drat \n    wt \n    qsec \n    vs \n    am \n    gear \n    carb \n  \n \n\n  \n    Mazda RX4 \n    21.0 \n    6 \n    160 \n    110 \n    3.90 \n    2.620 \n    16.46 \n    0 \n    1 \n    4 \n    4 \n  \n  \n    Mazda RX4 Wag \n    21.0 \n    6 \n    160 \n    110 \n    3.90 \n    2.875 \n    17.02 \n    0 \n    1 \n    4 \n    4 \n  \n  \n    Datsun 710 \n    22.8 \n    4 \n    108 \n    93 \n    3.85 \n    2.320 \n    18.61 \n    1 \n    1 \n    4 \n    1 \n  \n  \n    Hornet 4 Drive \n    21.4 \n    6 \n    258 \n    110 \n    3.08 \n    3.215 \n    19.44 \n    1 \n    0 \n    3 \n    1 \n  \n  \n    Hornet Sportabout \n    18.7 \n    8 \n    360 \n    175 \n    3.15 \n    3.440 \n    17.02 \n    0 \n    0 \n    3 \n    2 \n  \n  \n    Valiant \n    18.1 \n    6 \n    225 \n    105 \n    2.76 \n    3.460 \n    20.22 \n    1 \n    0 \n    3 \n    1 \n  \n\n\n\n\n\nChcemy przewidywać zmienną typu ciągłego - w naszym przypadku spalanie\n\n\n\n\n \n  \n      \n    mpg \n    cyl \n    disp \n    hp \n    drat \n    wt \n    qsec \n    vs \n    am \n    gear \n    carb \n  \n \n\n  \n    Mazda RX4 \n    21.0 \n    6 \n    160 \n    110 \n    3.90 \n    2.620 \n    16.46 \n    0 \n    1 \n    4 \n    4 \n  \n  \n    Mazda RX4 Wag \n    21.0 \n    6 \n    160 \n    110 \n    3.90 \n    2.875 \n    17.02 \n    0 \n    1 \n    4 \n    4 \n  \n  \n    Datsun 710 \n    22.8 \n    4 \n    108 \n    93 \n    3.85 \n    2.320 \n    18.61 \n    1 \n    1 \n    4 \n    1 \n  \n  \n    Hornet 4 Drive \n    21.4 \n    6 \n    258 \n    110 \n    3.08 \n    3.215 \n    19.44 \n    1 \n    0 \n    3 \n    1 \n  \n  \n    Hornet Sportabout \n    18.7 \n    8 \n    360 \n    175 \n    3.15 \n    3.440 \n    17.02 \n    0 \n    0 \n    3 \n    2 \n  \n  \n    Valiant \n    18.1 \n    6 \n    225 \n    105 \n    2.76 \n    3.460 \n    20.22 \n    1 \n    0 \n    3 \n    1 \n  \n\n\n\n\n\nZałóżmy że naszym celem jest ustalenie jak wygląda zależność pomiędzy liczbą koni mechanicznych a spalaniem\n\n\n\n\n\nW celu rozwiązania tego zadania i znalezienia prostej która najlepiej odda tę zależność możemy posłużyć się regresją liniową.\nW naszym wypadku wzór byłby następujący:\n\\[\\text{mpg} = \\beta_0 + \\beta_1 \\cdot \\text{hp}\\]\nGdzie:\n– \\(\\beta_0\\) jest wyrazem wolnym\n– \\(\\beta_1\\) jest współczynnikiem dla liczby koni mechanicznych\nCo można uogólnić na dowolną liczbę cech których użyjemy do budowy modelu (oznaczone jako \\(x_i\\))\n\\[y = \\beta_0 + \\beta_1x_1\\]\n\n\nJak wyznaczyć współczynniki?\nNa poprzednim spotkaniu mówiliśmy o funkcjach straty oraz optymalizacji ich wartości w celu znalezienia najlepszego modelu - te same zasady dotyczą regresji liniowej!\nNajpopularniejszą funkcją straty jest MSE, dla przypomnienia:\n\\[MSE = \\frac{1}{n}\\sum_{i=0}^{n}(y_i-\\hat{y}_i)^2, \\] gdzie:\n– \\(n\\) - liczba obserwacji  – \\(y_i\\) - i-ta obserwacja  – \\(\\hat{y}_i\\) - predykcja dla i-tej obserwacji\nDla regresji z jedną zmienną będzie to:\n\\[MSE = \\frac{1}{n}\\sum_{i=0}^{n}(y_i-\\beta_0 + \\beta_1x_1)^2, \\]\na dokładniej w naszym przypadku\n\\[MSE = \\frac{1}{n}\\sum_{i=0}^{n}(y_i-\\beta_0 + \\beta_1\\cdot\\text{hp})^2, \\]"
   },
   {
     "objectID": "2_regresja.html#regresja-w-działaniu",
     "href": "2_regresja.html#regresja-w-działaniu",
-    "title": "Koło Naukowe Uczenia Maszynowego ATLAS - Bootcamp 2023",
+    "title": "Regresja",
     "section": "Regresja w działaniu",
     "text": "Regresja w działaniu\n\n\n\nLinie regresji poprowadzone dla naszych obserwacji wyglądają następująco\n\n\n\n\n\nZ tych trzech natomiast niebieska jest regresją dla której oba współczniki są dobrane poprzez optymalizacje funkcji starty\nDo określenia jakości naszego modelu możemy użyć metryki \\(R^2\\) określanej jako kwadrat wyjaśnianej wriancji. Mowiąc prościej, ile procent zmienności zmiennej wynikowej jest uchwycone za pomocą wykorzystanych predyktorów.\nMetryka ta przyjmuje wartości od \\(0\\) co oznacza że nie ma żadnej zależności do \\(1\\) co oznacza że zależność jest idelanie liniowa\nDla naszego modelu \\(R^2=0.59\\) czyli za pomocą danych jedynie o koniach mechanicznych auta jesteśmy w stanie wyjaśnić około \\(60\\%\\) zmienności spalania."
   },
   {
     "objectID": "2_regresja.html#regresja-wielomianowa",
     "href": "2_regresja.html#regresja-wielomianowa",
-    "title": "Koło Naukowe Uczenia Maszynowego ATLAS - Bootcamp 2023",
+    "title": "Regresja",
     "section": "Regresja wielomianowa",
     "text": "Regresja wielomianowa\n\n\n\nMożna zauważyć, że na naszym przykładzie punkty układają się nie do końca w linii prostej dlatego można zastanowić się czy nie byłoby lepiej użyć do tego zadania jakiejś funkcji nieliniowej?\nW tym celu możemy posłużyć się regresją wielomianową, jak sama nazwa wskazuje w tym przypadku zamiast linii prostej będziemy modelować zależność przy wykorzystaniu wielomianu.\nSpróbujmy dodatkowo włączyć do modelu konie mechaniczne w drugiej potędze\nWzór na MSE będzie wyglądał podobnie jak dla modelu liniowego z tą różnicą, że dodajemy nasz predyktor w drugiej potędze z własnym współczynnikiem\n\\[MSE = \\frac{1}{n}\\sum_{i=0}^{n}(y_i-\\beta_0 + \\beta_1\\cdot\\text{hp} + \\beta_2 \\cdot \\text{hp}^2)^2, \\]\n\n\n\n\n\n\nUWAGA\n\n\n\nPrzy włączaniu predyktora w wyższej potędze, musi on być włączony również we wszystkich niższych potęgach.\nKażdy z predyktorów ma inny współczynnik \\(\\beta\\) pomimo faktu że są tą samą cechą w różnych potęgach\n\n\n\nNasza krzywa naniesiona na punkty wygląda następująco:\n\n\n\n\n\nModel ten charakteruzyje się \\(R^2=0.76\\) co czyni go lepszym od poprzedniego ponieważ wyjaśnia \\(16\\%\\) zmienności więcej.\nAle czy na pewno jest to aż tak dobry model?\n\n\nOdpowiedzi\n\nDo 200-250 koni mechanicznych zależność rzeczywiście jest lepiej odwzorowana niż w modelu liniowym, natomiast powyżej tej wartości spodziewamy się że spalanie powinno dalej rosnąć natomiast model powyżej 250 koni mechanicznych przewiduje, że spalanie będzie maleć.\nMoże do doprowadzić do sytuacji gdzie wprowadzona obserwacja spoza zakresu uczenia np. samochód z 500 koniami mechanicznymi z takiego modelu może uzyskać predykcje spalania podobną jak dla samochodu ze 100 koniami.\n\n\nJak możemy w takim razie poprawć ten model?\nUłożenie punktów może nam sugerować, że lepsza tutaj będzie zależność hiperboliczna\n\n\n\n\n\n\n\n\nModel ten charakteruzyje się \\(R^2=0.74\\) czyli tylko \\(2\\%\\) mniej od modelu opisanego wielomianem kwadratowym, natomiast w tym przypadku zależność ta będzie bliższa rzeczywistości."
   },
   {
     "objectID": "2_regresja.html#regresja-wieloraka",
     "href": "2_regresja.html#regresja-wieloraka",
-    "title": "Koło Naukowe Uczenia Maszynowego ATLAS - Bootcamp 2023",
+    "title": "Regresja",
     "section": "Regresja wieloraka",
     "text": "Regresja wieloraka\nPrzy wykorzytaniu jednej cechy ciężko będzie zamodelować zależności wystepujące w prawdziwym świecie :).\nW celu uzyskania lepszego opisu zależności możemy wykorzystać regresję wieloraką, czyli regresję w której używamy wiele cech jednocześnie\nUogólniając wcześniej przedstawiony wzór na regresję liniową, regresję wieloraką zapisujemy następująco (gdzie \\(x_i\\) to cechy)\n\\[y = \\beta_0 + \\beta_1x_1 + \\beta_2x_2+\\cdots+\\beta_nx_n\\]\nDla naszego zadania moglibyśmy zbudować następujący model\ndisp, hp, qsec, wt, drat\n\\[\\text{mpg} = \\beta_0 + \\beta_1 \\cdot \\text{hp} + \\beta_2 \\cdot \\text{disp} + \\beta_3 \\cdot \\text{qsec} + \\beta_4 \\cdot \\text{wt} + \\beta_5 \\cdot \\text{drat}\\]\n\n\n\nTen model cechuje się \\(R^2 = 0.85\\) czyli uzyskaliśmy w ten sposób \\(10\\%\\) więcej wyjaśnianej zmienności względem najlepszego modelu zbudowanego na tylko jednym predyktorze."
   },
   {
     "objectID": "2_regresja.html#uwagi-końcowe",
     "href": "2_regresja.html#uwagi-końcowe",
-    "title": "Koło Naukowe Uczenia Maszynowego ATLAS - Bootcamp 2023",
+    "title": "Regresja",
     "section": "Uwagi końcowe",
     "text": "Uwagi końcowe\n\nRegresja wielomianowa i regresja wieloraka są również regresjami liniowymi.\nW rzeczywistości lepszą miarą od \\(R^2\\) jest jego skorygowana wersja oznaczana jako \\(R^2_{adj}\\) ponieważ zwykłe \\(R^2\\) będzie rosło pomimo dodawania do modelu nieistotnych predyktorów.\nW regresji można stosować regularyzację np. Ridge lub LASSO w celu uniknięcia nadmiernego dopasowania.\nRegresja liniowa ma wiele założeń które trzeba spełnić aby móc poprawnie wnioskować na jej podstawie. W zadaniu predykcyjnym (tak jak w naszym przypadku) nie musimy się nimi przejmować ponieważ chcemy tylko aby model jak najlepiej przewidywał zmienną wynikową."
   },
   {
     "objectID": "2_regresja.html#zadanie",
     "href": "2_regresja.html#zadanie",
-    "title": "Koło Naukowe Uczenia Maszynowego ATLAS - Bootcamp 2023",
+    "title": "Regresja",
     "section": "Zadanie",
     "text": "Zadanie\nDo dyspozycji macie dane (link) dotyczące przewidywanej długości życia zebrane w 193 państwach na przestrzeni 15 lat.\nDane zawierają 18 kolumn z takimi informacjami jak:\n\nOdsetek zgonów w różnym wieku\nSzczepienia noworodków\nWskaźniki w kontekście państwa (np. GDP, wydatki na służbe zdrowia)\n\nZbudujcie model regresji liniowej przewidujący długość życia na podstawie dostępnych kolumn. Jakie wyszło RMSE? Czy błąd jest wysoki czy niski?\nDla zaawansowanych:\n\nUzupełnić braki danych.\nWykonać model w tidymodels.\nDodać regularyzację."
   }

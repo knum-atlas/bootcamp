@@ -1,4 +1,4 @@
-# Koło Naukowe Uczenia Maszynowego ATLAS - Bootcamp 2023 {.unnumbered}
+# Wstęp {.unnumbered}
 
 ---
 author: "KNUM ATLAS"
