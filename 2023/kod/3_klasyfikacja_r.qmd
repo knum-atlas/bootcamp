@@ -1,0 +1,399 @@
+---
+title: "Bootcamp 2023 - klasyfikacja"
+author: "KNUM ATLAS"
+format: 
+  html:
+    warning: false
+    message: false
+    self-contained: true
+    self-contained-math: true
+    toc: true
+    toc-title: Spis treści
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+library(tidymodels)
+library(caret)
+data("spam7", package = "DAAG")
+df <- data.frame(spam7)
+```
+
+# Spam E-mail Data
+
+## Opis
+
+Dane składają się z 4601 wiadomości e-mail, z których 1813 zostało zidentyfikowanych jako spam. Jest to podzbiór pełnego zbioru danych, zawierający tylko sześć z 57 zmiennych objaśniających znajdujących się pełnym zbiorze danych.
+
+<https://rdrr.io/cran/DAAG/man/spam7.html>
+
+```{r}
+head(df)
+```
+
+### **Format**
+
+Columns included are:
+
+**crl.tot**
+
+:   total length of uninterrupted sequences of capitals
+
+**dollar**
+
+:   Occurrences of the dollar sign, as percent of total number of characters
+
+**bang**
+
+:   Occurrences of '!', as percent of total number of characters
+
+**money**
+
+:   Occurrences of 'money', as percent of total number of words
+
+**n000**
+
+:   Occurrences of the string '000', as percent of total number of words
+
+**make**
+
+:   Occurrences of 'make', as a percent of total number of words
+
+**yesno**
+
+:   outcome variable, a factor with levels \`n\` not spam, \`y\` spam
+
+```{r}
+str(df)
+```
+
+```{r}
+summary(df,digits = 1)
+```
+
+## Czyszczenie zbioru danych
+
+Zmiana kolumny `yesno` w zmienną binarną, czyli tak aby zamiast `y` i `n` przyjomwała wartości `1` i `0` (dla wygody zmieniliśmy również nazwę na `spam`)
+
+```{r}
+colnames(df)[colnames(df) == 'yesno'] <- 'spam'
+df$spam <- ifelse(df$spam == 'y', 1, 0)
+```
+
+```{r}
+head(df)
+```
+
+```{r}
+summary(df,digits = 1)
+```
+
+```{r}
+library(corrplot)
+heatmap(cor(df))
+corrplot(cor(df))
+```
+
+```{r}
+# Obliczenie liczby wystąpień 0 i 1 w kolumnie 'spam'
+no_count <- sum(df$spam == 0)
+yes_count <- sum(df$spam == 1)
+
+# Obliczenie stosunku 'n/y' i 'y/n'
+n_y_ratio <- round(no_count / yes_count, 2)
+y_n_ratio <- round(yes_count / no_count, 2)
+
+# Obliczenie procentowego udziału 'n%' i 'y%'
+n_percent <- round(no_count / length(df$spam), 2)
+y_percent <- round(yes_count / length(df$spam), 2)
+
+# Tworzenie wynikowego słownika
+result <- list(
+  'no' = no_count,
+  'yes' = yes_count,
+  'n/y' = n_y_ratio,
+  'y/n' = y_n_ratio,
+  'n%' = n_percent,
+  'y%' = y_percent
+)
+result
+```
+
+```{r}
+ggplot(df,aes(spam)) +
+  geom_bar(fill="blue")
+  
+hist(df$spam,col="blue")
+```
+
+Wykresy `ramka-wąsy` (*ang. `boxplot`*)
+
+```{r}
+predictors=colnames(df)[1:6]
+par(mfrow=c(2, 3))
+a <- lapply(predictors, function(variable) {
+  boxplot(df[variable], main=variable,col="blue")
+})
+```
+
+```{r}
+df2 <- df
+for (col in predictors) {
+  mean <- mean(df2[, col])
+  sd <- sd(df2[, col])
+  df2 <- df2[df2[, col] <= mean + 2 * sd, ]
+}
+```
+
+```{r}
+summary(df2,digits = 1)
+```
+
+```{r}
+par(mfrow=c(1, 1))
+heatmap(cor(df2))
+corrplot(cor(df2))
+```
+
+```{r}
+# Obliczenie liczby wystąpień 0 i 1 w kolumnie 'spam'
+no_count <- sum(df2$spam == 0)
+yes_count <- sum(df2$spam == 1)
+
+# Obliczenie stosunku 'n/y' i 'y/n'
+n_y_ratio <- round(no_count / yes_count, 2)
+y_n_ratio <- round(yes_count / no_count, 2)
+
+# Obliczenie procentowego udziału 'n%' i 'y%'
+n_percent <- round(no_count / length(df2$spam), 2)
+y_percent <- round(yes_count / length(df2$spam), 2)
+
+# Tworzenie wynikowego słownika
+result <- list(
+  'no' = no_count,
+  'yes' = yes_count,
+  'n/y' = n_y_ratio,
+  'y/n' = y_n_ratio,
+  'n%' = n_percent,
+  'y%' = y_percent
+)
+result
+```
+
+## Klasyfikacja
+
+### Podział zbioru
+
+```{r}
+library(rsample)
+split <- initial_split(df2,0.85)
+df2_test <- testing(split)
+df2_train <- training(split)
+
+```
+
+### Standaryzacja predyktorów
+
+```{r}
+
+# Ustal nazwę zmiennej celu (target) i listę zmiennych predykcyjnych (predictors)
+target <- "spam"
+
+# Dopasowanie skaleru do danych treningowych
+scaler <- preProcess(df2_train[, predictors], method = "scale")
+
+# Skalowanie danych treningowych
+train2_std <- predict(scaler, df2_train[, predictors])
+
+# Tworzenie ramki danych ze zeskalowanymi danymi treningowymi
+df2_train_std <- data.frame(df2_train[, target], train2_std)
+colnames(df2_train_std) <- c(target, predictors)
+
+# Skalowanie danych testowych
+test2_std <- predict(scaler, df2_test[, predictors])
+
+# Tworzenie ramki danych ze zeskalowanymi danymi testowymi
+df2_test_std <- data.frame(df2_test[, target], test2_std)
+colnames(df2_test_std) <- c(target, predictors)
+```
+
+### Regresja logistyczna
+
+#### Budowanie modelu
+
+```{r}
+
+df2_train_std$spam=as.factor(df2_train_std$spam)
+df2_test_std$spam=as.factor(df2_test_std$spam)
+
+# Dopasowanie modelu regresji logistycznej
+model <-logistic_reg(mode = "classification",
+  engine = "glm",penalty = tune(), mixture = tune())
+
+# Tworzenie przepisu
+rec <- recipe(spam ~ .,data=df2_test_std)
+
+# Tworzenie workflow
+wkflow <- workflow() %>% 
+  add_model(model) %>%  
+  add_recipe(rec)
+
+# Uczenie modelu
+glm <- wkflow %>% 
+  fit(data = df2_train_std)
+
+```
+
+#### Predykcja
+
+```{r}
+# Przewidywanie wyników na podstawie modelu regresji logistycznej
+pred <- predict(glm, new_data = df2_test_std)
+df_preds <- glm %>% 
+  augment(new_data = df2_test_std)
+df_preds
+```
+
+#### Confusion matrix
+
+```{r}
+prediction=NULL
+prediction <- cbind(df2_test_std, pred)
+cm <- confusionMatrix(prediction$.pred_class,prediction$spam)
+cm
+
+```
+
+#### Metryki
+
+```{r}
+cm$byClass
+cm$overall
+
+```
+
+```{r}
+
+roc_auc(df_preds, truth = spam, .pred_1,event_level = "second")
+```
+
+```{r}
+roc_curve(df_preds, truth = spam, .pred_1, event_level = "second") |> 
+  autoplot()
+```
+
+### Drzewo decyzyjne
+
+#### Budowanie modelu
+
+```{r}
+model <- decision_tree(
+  mode = "classification",
+  engine = "rpart",
+  cost_complexity = NULL,
+  tree_depth = NULL,
+  min_n = NULL
+)
+
+wkflow <- workflow() %>% 
+  add_model(model) %>%  
+  add_recipe(rec)
+
+
+dt <- wkflow %>% 
+  fit(data = df2_train_std)
+```
+
+#### Predykcja
+
+```{r}
+pred <- predict(dt, new_data = df2_test_std)
+df_preds <- dt %>%  
+  augment(new_data = df2_test_std)
+df_preds
+```
+
+#### Confusion matrix
+
+```{r}
+prediction=NULL
+prediction <- cbind(df2_test_std, pred)
+cm <- confusionMatrix(prediction$.pred_class,prediction$spam)
+cm
+```
+
+#### Metryki
+
+```{r}
+cm$byClass
+cm$overall
+```
+
+```{r}
+roc_auc(df_preds, truth = spam, .pred_1,event_level = "second")
+```
+
+```{r}
+roc_curve(df_preds, truth = spam, .pred_1, event_level = "second") |> 
+  autoplot()
+```
+
+### Las losowy
+
+#### Budowanie modelu
+
+```{r}
+model <- rand_forest(
+  mode = "classification",
+  engine = "ranger",
+  mtry = NULL,
+  trees = NULL,
+  min_n = NULL
+)
+
+wkflow <- workflow() %>% 
+  add_model(model) %>%  
+  add_recipe(rec)
+
+
+dt <- wkflow %>% 
+  fit(data = df2_train_std)
+```
+
+#### Predykcja
+
+```{r}
+pred <- predict(dt, new_data = df2_test_std)
+df_preds <- dt %>%  
+  augment(new_data = df2_test_std)
+df_preds
+```
+
+#### Confusion matrix
+
+```{r}
+prediction=NULL
+prediction <- cbind(df2_test_std, pred)
+cm <- confusionMatrix(prediction$.pred_class,prediction$spam)
+cm
+```
+
+#### Metryki
+
+```{r}
+cm$byClass
+cm$overall
+```
+
+```{r}
+roc_auc(df_preds, truth = spam, .pred_1,event_level = "second")
+```
+
+```{r}
+roc_curve(df_preds, truth = spam, .pred_1, event_level = "second") |> 
+  autoplot()
+```
+
+### 

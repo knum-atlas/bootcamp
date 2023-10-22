@@ -1,0 +1,178 @@
+---
+title: "Bootcamp 2023 - regresja"
+format: 
+  html:
+    warning: false
+    message: false
+    self-contained: true
+    self-contained-math: true
+    toc: true
+    toc-title: Spis treści
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+library(tidyverse)
+library(PerformanceAnalytics)
+library(corrplot)
+library(GGally)
+library(rsample)
+library(Metrics)
+```
+
+```{r}
+data("attitude", package = "datasets")
+df <- data.frame(attitude)
+```
+
+## Wizualizacja
+
+```{r}
+head(df)
+```
+
+```{r}
+str(df)
+```
+
+```{r}
+summary(df)
+```
+
+```{r}
+heatmap(cor(df))
+corrplot(cor(df))
+```
+
+Wybór cechy, którą będziemy przwidywać (`zmiennej zależnej` *ang.* *`target`*) i cech za pomocą których będziemy przewidywać (`zmiennych niezależnych` *ang. `predictors`*)
+
+```{r}
+target = "rating"
+predictors <- colnames(df)[colnames(df)!=target]
+```
+
+Wykresy `ramka-wąsy` (*ang. `boxplot`*)
+
+```{r}
+par(mfrow=c(2, 3))
+a <- lapply(predictors, function(variable) {
+  boxplot(df[variable], main=variable,col="blue")
+})
+```
+
+Usuwanie obserwacji `odstających` (*ang. `outliers`*)
+
+```{r}
+df2 <- df
+for (col in predictors) {
+  mean <- mean(df2[, col])
+  sd <- sd(df2[, col])
+  df2 <- df2[df2[, col] <= mean + 2 * sd, ]
+}
+```
+
+```{r}
+str(df2)
+```
+
+```{r}
+df[!(df$rating %in% df2$rating), ]
+```
+
+```{r}
+par(mfrow=c(2, 3))
+a <- lapply(predictors, function(variable) {
+  boxplot(df2[variable], main=variable,col="blue")
+})
+```
+
+Zależności pomiędzy `zmienną objaśnianą` (*ang. `target`*), a `zmiennymi objaśniającymi` (*ang. `predictors`*)
+
+```{r}
+par(mfrow=c(2, 3))
+a <- lapply(predictors, function(variable) {
+  plot(df2$rating,df2[,variable], main=variable,xlab="rating",ylab=variable,col="blue")
+})
+```
+
+```{r}
+ggpairs(df2)
+chart.Correlation(df)
+```
+
+## `Regresja liniowa`
+
+### `Preprocessing`
+
+Podział na zbiór `testowy` i `treningowy`
+
+```{r}
+split <- initial_split(df2,0.85)
+df_test <- testing(split)
+df_train <- training(split)
+```
+
+`Standaryzacja predyktorów`
+
+```{r}
+library(dplyr)
+
+scaler <- scale(df_train[, predictors])
+
+df_train_std <- as.data.frame(scaler)
+colnames(df_train_std) <- predictors
+df_train_std <- cbind(df_train[target], df_train_std)
+
+test_std <- scale(df_test[, predictors])
+df_test_std <- as.data.frame(test_std)
+colnames(df_test_std) <- predictors
+df_test_std <- cbind(df_test[target], df_test_std)
+```
+
+Model `regresji liniowej` budowany metodą `najmniejszych kwadratów` (*ang. `OLS - Ordinary least Squares`*)
+
+```{r}
+model <- lm(rating ~ .,df_train_std)
+summary(model)
+```
+
+`Predykcja i MSE`
+
+```{r}
+pred <- predict(model,newdata=df_test_std)
+```
+
+```{r}
+mse(pred,df_test_std$rating)
+```
+
+```{r}
+plot(df_test_std$rating,pred)
+```
+
+## `Regresja wielomianowa`
+
+```{r}
+num_features <- c()
+
+# Przetestuj różne stopnie wielomianu
+degrees <- 1:5
+for (d in degrees) {
+  # Przekształć dane na macierz numeryczną
+  data_matrix <- as.matrix(df_train_std[predictors])
+  
+  # Wykonaj przekształcenie wielomianowe danych
+  data <- poly(data_matrix, degree = d, raw = TRUE)
+  
+  # Zapisz liczbę cech
+  num_features <- c(num_features, ncol(data))
+  
+  # Wyświetl rezultat
+  cat("Stopień wielomianu:", d, ", Liczba cech:", ncol(data), "\n")
+}
+
+# Wyświetl wykres liczby cech w zależności od stopnia wielomianu
+plot(degrees, num_features, type = "b", xlab = "Stopień wielomianu", ylab = "Liczba cech")
+```
