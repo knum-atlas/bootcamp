@@ -1,0 +1,110 @@
+---
+title: "Rozwiązanie zadania regresyjnego"
+author: "KNUM ATLAS"
+date: "2023-10-22"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE)
+```
+
+## Rozwiązanie zadania regresyjnego
+
+### Rozwiązanie zadania zaczynamy od wczytania niezbędnych bibliotek
+
+```{r message=FALSE}
+library(tidyverse)
+library(tidymodels)
+```
+
+
+### Wczytujemy dane i sprawdzamy jak wyglądają
+
+```{r}
+data <- read_csv("life_expectancy.csv")
+head(data)
+```
+
+```{r}
+nrow(data)
+```
+
+
+### Usuwamy pierwszą kolumnę, ponieważ to po prostu kolumna z indeksem, która nam się niepotrzebnie wczytała
+
+```{r}
+data <- data[,-1]
+```
+
+### Sprawdźmy sobie podstawowe informacje o naszych zmiennych
+
+```{r}
+summary(data)
+```
+### BMI wynoszące 1 na pewno nas powinno zaniepokoić i powinniśmy rozważyć usunięcie takich podejrzanych wartości, ale w tym przypadku idziemy dalej i sprawdzamy czy występują braki danych
+
+```{r}
+apply(data, 2, function(x) any(is.na(x)))
+```
+### Tak, występują, sprawdźmy ile
+
+```{r}
+data %>%
+  is.na() %>%
+  summary()
+```
+### Liczba true oznacza ile braków mamy dla danej kolumny
+
+### Mamy wiele braków danych, nie powinniście ich usuwać, tylko zastanowić się nad metodą uzupełnienia ich (najprościej - medianą, trochę ciekawiej, pewnie lepiej - Random Forest, KNN). Mimo wszystko w tym rozwiązaniu usuniemy braki.
+
+```{r}
+data <- drop_na(data)
+```
+
+```{r}
+nrow(data)
+```
+### Utraciliśmy bardzo dużo informacji - dlatego nie powinniśmy byli usuwać obserwacji z brakami. Teraz przejdźmy do modelowania. Wczytałem tidymodels do podziału zbioru uczącego (moglibyśmy też w nim modelować, ale to na trzecim spotkaniu).
+
+```{r}
+set.seed(14)
+data_split <- initial_split(data, 0.85)
+train_data <- training(data_split)
+test_data <- testing(data_split)
+mod <- lm(Life.expectancy~., data=train_data)
+summary(mod)
+```
+### Gdybyśmy modelowali w celu wnioskowania, prawdopodobnie szukalibyśmy modelu, którego wszystkie zmienne byłyby istotne. Ponieważ chcemy zbudować model, który służy tylko do predykcji to nie będziemy sprawdzać założeń, ani szukać modelu, w którym wszystkie zmienne są istotne statystycznie. Otrzymaliśmy R^2 na poziomie 0.8285 i RSE 3.6, co wydaje się być w porządku wynikiem.
+
+### Teraz zróbmy sobie predykcję na zbiorze testowym
+
+```{r}
+pred <- predict(mod, test_data)
+pred_df <- cbind(test_data, pred)
+```
+
+### Policzmy sobie RMSE
+
+```{r}
+rmse(data= pred_df, truth = Life.expectancy, estimate = pred)
+```
+
+### Narysujmy predicted vs real values
+```{r}
+plot(pred_df$pred,                                # Draw plot using Base R
+     pred_df$Life.expectancy,
+     xlab = "Predicted Values",
+     ylab = "Observed Values")
+abline(a = 0,                                        # Add straight line
+       b = 1,
+       col = "red",
+       lwd = 2)
+```
+
+
+
+
+
+
+

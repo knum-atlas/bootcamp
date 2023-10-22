@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="KNUM ATLAS">
+<meta name="dcterms.date" content="2023-10-22">
+
+<title>Rozwiązanie zadania regresyjnego</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="zadanie_regresja_R_files/libs/clipboard/clipboard.min.js"></script>
+<script src="zadanie_regresja_R_files/libs/quarto-html/quarto.js"></script>
+<script src="zadanie_regresja_R_files/libs/quarto-html/popper.min.js"></script>
+<script src="zadanie_regresja_R_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="zadanie_regresja_R_files/libs/quarto-html/anchor.min.js"></script>
+<link href="zadanie_regresja_R_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="zadanie_regresja_R_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="zadanie_regresja_R_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="zadanie_regresja_R_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="zadanie_regresja_R_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Rozwiązanie zadania regresyjnego</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>KNUM ATLAS </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 22, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="rozwiązanie-zadania-regresyjnego" class="level2">
+<h2 class="anchored" data-anchor-id="rozwiązanie-zadania-regresyjnego">Rozwiązanie zadania regresyjnego</h2>
+<section id="rozwiązanie-zadania-zaczynamy-od-wczytania-niezbędnych-bibliotek" class="level3">
+<h3 class="anchored" data-anchor-id="rozwiązanie-zadania-zaczynamy-od-wczytania-niezbędnych-bibliotek">Rozwiązanie zadania zaczynamy od wczytania niezbędnych bibliotek</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="wczytujemy-dane-i-sprawdzamy-jak-wyglądają" class="level3">
+<h3 class="anchored" data-anchor-id="wczytujemy-dane-i-sprawdzamy-jak-wyglądają">Wczytujemy dane i sprawdzamy jak wyglądają</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"life_expectancy.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>New names:
+Rows: 2938 Columns: 20
+── Column specification
+──────────────────────────────────────────────────────── Delimiter: "," dbl
+(20): ...1, Life.expectancy, Adult.Mortality, infant.deaths, Alcohol, pe...
+ℹ Use `spec()` to retrieve the full column specification for this data. ℹ
+Specify the column types or set `show_col_types = FALSE` to quiet this message.
+• `` -&gt; `...1`</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 20
+   ...1 Life.exp…¹ Adult…² infan…³ Alcohol perce…⁴ Hepat…⁵ Measles   BMI under…⁶
+  &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+1     1       65       263      62    0.01   71.3       65    1154  19.1      83
+2     2       59.9     271      64    0.01   73.5       62     492  18.6      86
+3     3       59.9     268      66    0.01   73.2       64     430  18.1      89
+4     4       59.5     272      69    0.01   78.2       67    2787  17.6      93
+5     5       59.2     275      71    0.01    7.10      68    3013  17.2      97
+6     6       58.8     279      74    0.01   79.7       66    1989  16.7     102
+# … with 10 more variables: Polio &lt;dbl&gt;, Total.expenditure &lt;dbl&gt;,
+#   Diphtheria &lt;dbl&gt;, HIV.AIDS &lt;dbl&gt;, GDP &lt;dbl&gt;, Population &lt;dbl&gt;,
+#   thinness..1.19.years &lt;dbl&gt;, thinness.5.9.years &lt;dbl&gt;,
+#   Income.composition.of.resources &lt;dbl&gt;, Schooling &lt;dbl&gt;, and abbreviated
+#   variable names ¹​Life.expectancy, ²​Adult.Mortality, ³​infant.deaths,
+#   ⁴​percentage.expenditure, ⁵​Hepatitis.B, ⁶​under.five.deaths</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2938</code></pre>
+</div>
+</div>
+</section>
+<section id="usuwamy-pierwszą-kolumnę-ponieważ-to-po-prostu-kolumna-z-indeksem-która-nam-się-niepotrzebnie-wczytała" class="level3">
+<h3 class="anchored" data-anchor-id="usuwamy-pierwszą-kolumnę-ponieważ-to-po-prostu-kolumna-z-indeksem-która-nam-się-niepotrzebnie-wczytała">Usuwamy pierwszą kolumnę, ponieważ to po prostu kolumna z indeksem, która nam się niepotrzebnie wczytała</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data[,<span class="sc">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="sprawdźmy-sobie-podstawowe-informacje-o-naszych-zmiennych" class="level3">
+<h3 class="anchored" data-anchor-id="sprawdźmy-sobie-podstawowe-informacje-o-naszych-zmiennych">Sprawdźmy sobie podstawowe informacje o naszych zmiennych</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Life.expectancy Adult.Mortality infant.deaths       Alcohol       
+ Min.   :36.30   Min.   :  1.0   Min.   :   0.0   Min.   : 0.0100  
+ 1st Qu.:63.10   1st Qu.: 74.0   1st Qu.:   0.0   1st Qu.: 0.8775  
+ Median :72.10   Median :144.0   Median :   3.0   Median : 3.7550  
+ Mean   :69.22   Mean   :164.8   Mean   :  30.3   Mean   : 4.6029  
+ 3rd Qu.:75.70   3rd Qu.:228.0   3rd Qu.:  22.0   3rd Qu.: 7.7025  
+ Max.   :89.00   Max.   :723.0   Max.   :1800.0   Max.   :17.8700  
+ NA's   :10      NA's   :10                       NA's   :194      
+ percentage.expenditure  Hepatitis.B       Measles              BMI       
+ Min.   :    0.000      Min.   : 1.00   Min.   :     0.0   Min.   : 1.00  
+ 1st Qu.:    4.685      1st Qu.:77.00   1st Qu.:     0.0   1st Qu.:19.30  
+ Median :   64.913      Median :92.00   Median :    17.0   Median :43.50  
+ Mean   :  738.251      Mean   :80.94   Mean   :  2419.6   Mean   :38.32  
+ 3rd Qu.:  441.534      3rd Qu.:97.00   3rd Qu.:   360.2   3rd Qu.:56.20  
+ Max.   :19479.912      Max.   :99.00   Max.   :212183.0   Max.   :87.30  
+                        NA's   :553                        NA's   :34     
+ under.five.deaths     Polio       Total.expenditure   Diphtheria   
+ Min.   :   0.00   Min.   : 3.00   Min.   : 0.370    Min.   : 2.00  
+ 1st Qu.:   0.00   1st Qu.:78.00   1st Qu.: 4.260    1st Qu.:78.00  
+ Median :   4.00   Median :93.00   Median : 5.755    Median :93.00  
+ Mean   :  42.04   Mean   :82.55   Mean   : 5.938    Mean   :82.32  
+ 3rd Qu.:  28.00   3rd Qu.:97.00   3rd Qu.: 7.492    3rd Qu.:97.00  
+ Max.   :2500.00   Max.   :99.00   Max.   :17.600    Max.   :99.00  
+                   NA's   :19      NA's   :226       NA's   :19     
+    HIV.AIDS           GDP              Population        thinness..1.19.years
+ Min.   : 0.100   Min.   :     1.68   Min.   :3.400e+01   Min.   : 0.10       
+ 1st Qu.: 0.100   1st Qu.:   463.94   1st Qu.:1.958e+05   1st Qu.: 1.60       
+ Median : 0.100   Median :  1766.95   Median :1.387e+06   Median : 3.30       
+ Mean   : 1.742   Mean   :  7483.16   Mean   :1.275e+07   Mean   : 4.84       
+ 3rd Qu.: 0.800   3rd Qu.:  5910.81   3rd Qu.:7.420e+06   3rd Qu.: 7.20       
+ Max.   :50.600   Max.   :119172.74   Max.   :1.294e+09   Max.   :27.70       
+                  NA's   :448         NA's   :652         NA's   :34          
+ thinness.5.9.years Income.composition.of.resources   Schooling    
+ Min.   : 0.10      Min.   :0.0000                  Min.   : 0.00  
+ 1st Qu.: 1.50      1st Qu.:0.4930                  1st Qu.:10.10  
+ Median : 3.30      Median :0.6770                  Median :12.30  
+ Mean   : 4.87      Mean   :0.6276                  Mean   :11.99  
+ 3rd Qu.: 7.20      3rd Qu.:0.7790                  3rd Qu.:14.30  
+ Max.   :28.60      Max.   :0.9480                  Max.   :20.70  
+ NA's   :34         NA's   :167                     NA's   :163    </code></pre>
+</div>
+</div>
+</section>
+<section id="bmi-wynoszące-1-na-pewno-nas-powinno-zaniepokoić-i-powinniśmy-rozważyć-usunięcie-takich-podejrzanych-wartości-ale-w-tym-przypadku-idziemy-dalej-i-sprawdzamy-czy-występują-braki-danych" class="level3">
+<h3 class="anchored" data-anchor-id="bmi-wynoszące-1-na-pewno-nas-powinno-zaniepokoić-i-powinniśmy-rozważyć-usunięcie-takich-podejrzanych-wartości-ale-w-tym-przypadku-idziemy-dalej-i-sprawdzamy-czy-występują-braki-danych">BMI wynoszące 1 na pewno nas powinno zaniepokoić i powinniśmy rozważyć usunięcie takich podejrzanych wartości, ale w tym przypadku idziemy dalej i sprawdzamy czy występują braki danych</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(data, <span class="dv">2</span>, <span class="cf">function</span>(x) <span class="fu">any</span>(<span class="fu">is.na</span>(x)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                Life.expectancy                 Adult.Mortality 
+                           TRUE                            TRUE 
+                  infant.deaths                         Alcohol 
+                          FALSE                            TRUE 
+         percentage.expenditure                     Hepatitis.B 
+                          FALSE                            TRUE 
+                        Measles                             BMI 
+                          FALSE                            TRUE 
+              under.five.deaths                           Polio 
+                          FALSE                            TRUE 
+              Total.expenditure                      Diphtheria 
+                           TRUE                            TRUE 
+                       HIV.AIDS                             GDP 
+                          FALSE                            TRUE 
+                     Population            thinness..1.19.years 
+                           TRUE                            TRUE 
+             thinness.5.9.years Income.composition.of.resources 
+                           TRUE                            TRUE 
+                      Schooling 
+                           TRUE </code></pre>
+</div>
+</div>
+</section>
+<section id="tak-występują-sprawdźmy-ile" class="level3">
+<h3 class="anchored" data-anchor-id="tak-występują-sprawdźmy-ile">Tak, występują, sprawdźmy ile</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">is.na</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Life.expectancy Adult.Mortality infant.deaths    Alcohol       
+ Mode :logical   Mode :logical   Mode :logical   Mode :logical  
+ FALSE:2928      FALSE:2928      FALSE:2938      FALSE:2744     
+ TRUE :10        TRUE :10                        TRUE :194      
+ percentage.expenditure Hepatitis.B      Measles           BMI         
+ Mode :logical          Mode :logical   Mode :logical   Mode :logical  
+ FALSE:2938             FALSE:2385      FALSE:2938      FALSE:2904     
+                        TRUE :553                       TRUE :34       
+ under.five.deaths   Polio         Total.expenditure Diphtheria     
+ Mode :logical     Mode :logical   Mode :logical     Mode :logical  
+ FALSE:2938        FALSE:2919      FALSE:2712        FALSE:2919     
+                   TRUE :19        TRUE :226         TRUE :19       
+  HIV.AIDS          GDP          Population      thinness..1.19.years
+ Mode :logical   Mode :logical   Mode :logical   Mode :logical       
+ FALSE:2938      FALSE:2490      FALSE:2286      FALSE:2904          
+                 TRUE :448       TRUE :652       TRUE :34            
+ thinness.5.9.years Income.composition.of.resources Schooling      
+ Mode :logical      Mode :logical                   Mode :logical  
+ FALSE:2904         FALSE:2771                      FALSE:2775     
+ TRUE :34           TRUE :167                       TRUE :163      </code></pre>
+</div>
+</div>
+</section>
+<section id="liczba-true-oznacza-ile-braków-mamy-dla-danej-kolumny" class="level3">
+<h3 class="anchored" data-anchor-id="liczba-true-oznacza-ile-braków-mamy-dla-danej-kolumny">Liczba true oznacza ile braków mamy dla danej kolumny</h3>
+</section>
+<section id="mamy-wiele-braków-danych-nie-powinniście-ich-usuwać-tylko-zastanowić-się-nad-metodą-uzupełnienia-ich-najprościej---medianą-trochę-ciekawiej-pewnie-lepiej---random-forest-knn.-mimo-wszystko-w-tym-rozwiązaniu-usuniemy-braki." class="level3">
+<h3 class="anchored" data-anchor-id="mamy-wiele-braków-danych-nie-powinniście-ich-usuwać-tylko-zastanowić-się-nad-metodą-uzupełnienia-ich-najprościej---medianą-trochę-ciekawiej-pewnie-lepiej---random-forest-knn.-mimo-wszystko-w-tym-rozwiązaniu-usuniemy-braki.">Mamy wiele braków danych, nie powinniście ich usuwać, tylko zastanowić się nad metodą uzupełnienia ich (najprościej - medianą, trochę ciekawiej, pewnie lepiej - Random Forest, KNN). Mimo wszystko w tym rozwiązaniu usuniemy braki.</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">drop_na</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1649</code></pre>
+</div>
+</div>
+</section>
+<section id="utraciliśmy-bardzo-dużo-informacji---dlatego-nie-powinniśmy-byli-usuwać-obserwacji-z-brakami.-teraz-przejdźmy-do-modelowania.-wczytałem-tidymodels-do-podziału-zbioru-uczącego-moglibyśmy-też-w-nim-modelować-ale-to-na-trzecim-spotkaniu." class="level3">
+<h3 class="anchored" data-anchor-id="utraciliśmy-bardzo-dużo-informacji---dlatego-nie-powinniśmy-byli-usuwać-obserwacji-z-brakami.-teraz-przejdźmy-do-modelowania.-wczytałem-tidymodels-do-podziału-zbioru-uczącego-moglibyśmy-też-w-nim-modelować-ale-to-na-trzecim-spotkaniu.">Utraciliśmy bardzo dużo informacji - dlatego nie powinniśmy byli usuwać obserwacji z brakami. Teraz przejdźmy do modelowania. Wczytałem tidymodels do podziału zbioru uczącego (moglibyśmy też w nim modelować, ale to na trzecim spotkaniu).</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">14</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>data_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(data, <span class="fl">0.85</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>train_data <span class="ot">&lt;-</span> <span class="fu">training</span>(data_split)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> <span class="fu">testing</span>(data_split)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Life.expectancy<span class="sc">~</span>., <span class="at">data=</span>train_data)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Life.expectancy ~ ., data = train_data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-17.2668  -2.0851   0.0174   2.1693  12.0131 
+
+Coefficients:
+                                  Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                      5.396e+01  8.116e-01  66.480  &lt; 2e-16 ***
+Adult.Mortality                 -1.751e-02  1.056e-03 -16.589  &lt; 2e-16 ***
+infant.deaths                    8.966e-02  1.137e-02   7.888 6.17e-15 ***
+Alcohol                         -6.879e-02  3.338e-02  -2.061   0.0395 *  
+percentage.expenditure           3.449e-04  2.145e-04   1.608   0.1080    
+Hepatitis.B                     -2.499e-03  4.899e-03  -0.510   0.6100    
+Measles                         -1.217e-05  1.160e-05  -1.049   0.2945    
+BMI                              3.226e-02  6.572e-03   4.908 1.03e-06 ***
+under.five.deaths               -6.703e-02  8.267e-03  -8.108 1.13e-15 ***
+Polio                            8.516e-03  5.749e-03   1.481   0.1387    
+Total.expenditure                4.909e-02  4.389e-02   1.118   0.2636    
+Diphtheria                       8.643e-03  6.562e-03   1.317   0.1880    
+HIV.AIDS                        -4.217e-01  2.021e-02 -20.869  &lt; 2e-16 ***
+GDP                              2.363e-05  3.490e-05   0.677   0.4985    
+Population                      -9.101e-10  1.808e-09  -0.503   0.6148    
+thinness..1.19.years            -2.815e-02  5.730e-02  -0.491   0.6233    
+thinness.5.9.years              -5.483e-02  5.667e-02  -0.968   0.3334    
+Income.composition.of.resources  9.887e+00  8.980e-01  11.011  &lt; 2e-16 ***
+Schooling                        8.700e-01  6.441e-02  13.507  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.616 on 1382 degrees of freedom
+Multiple R-squared:  0.8307,    Adjusted R-squared:  0.8285 
+F-statistic: 376.8 on 18 and 1382 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+<section id="gdybyśmy-modelowali-w-celu-wnioskowania-prawdopodobnie-szukalibyśmy-modelu-którego-wszystkie-zmienne-byłyby-istotne.-ponieważ-chcemy-zbudować-model-który-służy-tylko-do-predykcji-to-nie-będziemy-sprawdzać-założeń-ani-szukać-modelu-w-którym-wszystkie-zmienne-są-istotne-statystycznie.-otrzymaliśmy-r2-na-poziomie-0.8285-i-rse-3.6-co-wydaje-się-być-w-porządku-wynikiem." class="level3">
+<h3 class="anchored" data-anchor-id="gdybyśmy-modelowali-w-celu-wnioskowania-prawdopodobnie-szukalibyśmy-modelu-którego-wszystkie-zmienne-byłyby-istotne.-ponieważ-chcemy-zbudować-model-który-służy-tylko-do-predykcji-to-nie-będziemy-sprawdzać-założeń-ani-szukać-modelu-w-którym-wszystkie-zmienne-są-istotne-statystycznie.-otrzymaliśmy-r2-na-poziomie-0.8285-i-rse-3.6-co-wydaje-się-być-w-porządku-wynikiem.">Gdybyśmy modelowali w celu wnioskowania, prawdopodobnie szukalibyśmy modelu, którego wszystkie zmienne byłyby istotne. Ponieważ chcemy zbudować model, który służy tylko do predykcji to nie będziemy sprawdzać założeń, ani szukać modelu, w którym wszystkie zmienne są istotne statystycznie. Otrzymaliśmy R^2 na poziomie 0.8285 i RSE 3.6, co wydaje się być w porządku wynikiem.</h3>
+</section>
+<section id="teraz-zróbmy-sobie-predykcję-na-zbiorze-testowym" class="level3">
+<h3 class="anchored" data-anchor-id="teraz-zróbmy-sobie-predykcję-na-zbiorze-testowym">Teraz zróbmy sobie predykcję na zbiorze testowym</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod, test_data)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>pred_df <span class="ot">&lt;-</span> <span class="fu">cbind</span>(test_data, pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="policzmy-sobie-rmse" class="level3">
+<h3 class="anchored" data-anchor-id="policzmy-sobie-rmse">Policzmy sobie RMSE</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rmse</span>(<span class="at">data=</span> pred_df, <span class="at">truth =</span> Life.expectancy, <span class="at">estimate =</span> pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 rmse    standard        3.51</code></pre>
+</div>
+</div>
+</section>
+<section id="narysujmy-predicted-vs-real-values" class="level3">
+<h3 class="anchored" data-anchor-id="narysujmy-predicted-vs-real-values">Narysujmy predicted vs real values</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pred_df<span class="sc">$</span>pred,                                <span class="co"># Draw plot using Base R</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>     pred_df<span class="sc">$</span>Life.expectancy,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Predicted Values"</span>,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Observed Values"</span>)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="dv">0</span>,                                        <span class="co"># Add straight line</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">b =</span> <span class="dv">1</span>,</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">"red"</span>,</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="zadanie_regresja_R_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
