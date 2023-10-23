@@ -6,15 +6,19 @@ Część praktyczna:
 
 Regresja:
 
--   [Notatnik Python](https://github.com/knum-atlas/bootcamp/blob/main/2023/kod/2_regresja_python.ipynb)
+-   [Praktyka Python](https://github.com/knum-atlas/bootcamp/blob/main/2023/kod/2_regresja_python.ipynb)
+
+-   [Praktyka R](https://github.com/knum-atlas/bootcamp/blob/main/2023/kod/2_regresja_r.ipynb)
 
 -   [Rozwiązanie zadania w Pythonie](https://github.com/knum-atlas/bootcamp/blob/main/2023/kod/zadanie_regresja_python.ipynb)
 
--   [Rozwiązanie zadania w R]()
+-   [Rozwiązanie zadania w R](https://github.com/knum-atlas/bootcamp/blob/main/2023/kod/zadanie_regresja_R.html)
 
 Klasyfikacja:
 
--   [Notatnik Python](https://github.com/knum-atlas/bootcamp/blob/main/2023/kod/3_klasyfikacja_python.ipynb)
+-   [Praktyka Python](https://github.com/knum-atlas/bootcamp/blob/main/2023/kod/3_klasyfikacja_python.ipynb)
+
+-   [Praktyka R](https://github.com/knum-atlas/bootcamp/blob/main/2023/kod/3_klasyfikacja_r.html)
 
 -   [Rozwiązanie zadania w Pythonie]()
 

@@ -9,14 +9,12 @@ format:
     self-contained-math: true
     toc: true
     toc-title: Spis treści
-editor: visual
-editor_options: 
-  chunk_output_type: console
 ---
 
 ```{r}
 library(tidymodels)
-library(caret)
+library(tidyverse)
+
 data("spam7", package = "DAAG")
 df <- data.frame(spam7)
 ```
@@ -33,37 +31,21 @@ Dane składają się z 4601 wiadomości e-mail, z których 1813 zostało zidenty
 head(df)
 ```
 
-### **Format**
+Kolumny w naszym zadaniu:
 
-Columns included are:
+-   crl.tot - całkowita długość nieprzerwanych sekwencji wielkich liter
 
-**crl.tot**
+-   dollar - wystąpienia znaku `$` jako procent wszystkich znaków
 
-:   total length of uninterrupted sequences of capitals
+-   bang - wystąpienia znaku `!` jako procent wszystkich znaków
 
-**dollar**
+-   money - wystąpienia słowa `money` jako procent wszystkich słów
 
-:   Occurrences of the dollar sign, as percent of total number of characters
+-   n000 - wystąpienia ciągu `000` jako procent wszystkich słów
 
-**bang**
+-   make - wystąpienia słowa `make` jako procent wszystkich słów
 
-:   Occurrences of '!', as percent of total number of characters
-
-**money**
-
-:   Occurrences of 'money', as percent of total number of words
-
-**n000**
-
-:   Occurrences of the string '000', as percent of total number of words
-
-**make**
-
-:   Occurrences of 'make', as a percent of total number of words
-
-**yesno**
-
-:   outcome variable, a factor with levels \`n\` not spam, \`y\` spam
+-   yesno - zmienna wynika określająca czy dana wiadomość była spamem
 
 ```{r}
 str(df)
@@ -78,8 +60,8 @@ summary(df,digits = 1)
 Zmiana kolumny `yesno` w zmienną binarną, czyli tak aby zamiast `y` i `n` przyjomwała wartości `1` i `0` (dla wygody zmieniliśmy również nazwę na `spam`)
 
 ```{r}
-colnames(df)[colnames(df) == 'yesno'] <- 'spam'
-df$spam <- ifelse(df$spam == 'y', 1, 0)
+colnames(df)[colnames(df) == 'yesno'] <- 'spam' #zmiana nazwy zmiennej
+df$spam <- ifelse(df$spam == 'y', 1, 0) #zmiana wartośc w kolumnie na 1 i 0
 ```
 
 ```{r}
@@ -90,310 +72,239 @@ head(df)
 summary(df,digits = 1)
 ```
 
+Bardzo wygodną (i dobrze wyglądającą) metodą do podsumowań tabelarycznych jest funkcja `stargazer` z pakietu o tej samej nazwie.
+
 ```{r}
-library(corrplot)
-heatmap(cor(df))
-corrplot(cor(df))
+library(stargazer)
+stargazer(df, type = "text") #można korzystać też z innych formatów np. latex
+```
+
+Następnie możemy sprawdzić za pomocą macierzy korelacji jak mocno zmienne są ze sobą skorelowane
+
+```{r}
+library(rstatix)
+corr <- cor_mat(df) #wyliczamy macierz korelacji
+corr
+
+corr_pval <- cor_pmat(df) #obliczamy istotność korelacji
+corr_pval
 ```
 
 ```{r}
-# Obliczenie liczby wystąpień 0 i 1 w kolumnie 'spam'
-no_count <- sum(df$spam == 0)
-yes_count <- sum(df$spam == 1)
+library(ggcorrplot)
+ggcorrplot(corr, p.mat=corr_pval, lab=T) #rysujemy wykres
+```
 
-# Obliczenie stosunku 'n/y' i 'y/n'
-n_y_ratio <- round(no_count / yes_count, 2)
-y_n_ratio <- round(yes_count / no_count, 2)
+Istotną kwestią jest sprawdzenie czy mamy do czynienia z zadaniem niezbalanoswanym, możemy to sprawdzić za pomocą zliczenia obserwacji (i metod graficznych)
 
-# Obliczenie procentowego udziału 'n%' i 'y%'
-n_percent <- round(no_count / length(df$spam), 2)
-y_percent <- round(yes_count / length(df$spam), 2)
+Zamieniamy też zmienną wynikową na faktor żeby było łatwiej na niej dalej działać
 
-# Tworzenie wynikowego słownika
-result <- list(
-  'no' = no_count,
-  'yes' = yes_count,
-  'n/y' = n_y_ratio,
-  'y/n' = y_n_ratio,
-  'n%' = n_percent,
-  'y%' = y_percent
-)
-result
+```{r}
+df$spam <- as_factor(df$spam)
 ```
 
 ```{r}
-ggplot(df,aes(spam)) +
-  geom_bar(fill="blue")
-  
-hist(df$spam,col="blue")
+plyr::count(df, 'spam') #funkcja z biblioteki plyr to zliczenia obserwacji
+```
+
+Wykres możemy narysować korzystając z pakietu `ggplot2`
+
+```{r}
+ggplot(df,aes(x = spam)) +
+  geom_bar(fill="blue")+
+  xlab("spam")
 ```
 
 Wykresy `ramka-wąsy` (*ang. `boxplot`*)
 
-```{r}
-predictors=colnames(df)[1:6]
-par(mfrow=c(2, 3))
-a <- lapply(predictors, function(variable) {
-  boxplot(df[variable], main=variable,col="blue")
-})
-```
+Możemy sprawdzić rozkład wartości poszczególnych zmiennych
 
 ```{r}
-df2 <- df
-for (col in predictors) {
-  mean <- mean(df2[, col])
-  sd <- sd(df2[, col])
-  df2 <- df2[df2[, col] <= mean + 2 * sd, ]
-}
-```
-
-```{r}
-summary(df2,digits = 1)
-```
-
-```{r}
-par(mfrow=c(1, 1))
-heatmap(cor(df2))
-corrplot(cor(df2))
-```
-
-```{r}
-# Obliczenie liczby wystąpień 0 i 1 w kolumnie 'spam'
-no_count <- sum(df2$spam == 0)
-yes_count <- sum(df2$spam == 1)
-
-# Obliczenie stosunku 'n/y' i 'y/n'
-n_y_ratio <- round(no_count / yes_count, 2)
-y_n_ratio <- round(yes_count / no_count, 2)
-
-# Obliczenie procentowego udziału 'n%' i 'y%'
-n_percent <- round(no_count / length(df2$spam), 2)
-y_percent <- round(yes_count / length(df2$spam), 2)
-
-# Tworzenie wynikowego słownika
-result <- list(
-  'no' = no_count,
-  'yes' = yes_count,
-  'n/y' = n_y_ratio,
-  'y/n' = y_n_ratio,
-  'n%' = n_percent,
-  'y%' = y_percent
-)
-result
+library(ggpubr)
+ggboxplot(df, y = "money")
+ggboxplot(df, y = c("money", "dollar"), combine = T) #połączenie dwóch wykresów
+ggboxplot(df, x = "spam", y="money") #rozkład zmiennej w podziale na spam
 ```
 
 ## Klasyfikacja
 
+Zadanie to będzie wykonane w filozofii `tidymodels` (co możecie potraktować jako wstęp do pracy z tym pakietem)
+
 ### Podział zbioru
 
-```{r}
-library(rsample)
-split <- initial_split(df2,0.85)
-df2_test <- testing(split)
-df2_train <- training(split)
-
-```
-
-### Standaryzacja predyktorów
+Po tym jak już przyjżeliśmy się naszym danym możemy przejść do procesu modelowania. Pierwszym etapem jest zawsze podział zbioru na uczący i testowy
 
 ```{r}
-
-# Ustal nazwę zmiennej celu (target) i listę zmiennych predykcyjnych (predictors)
-target <- "spam"
-
-# Dopasowanie skaleru do danych treningowych
-scaler <- preProcess(df2_train[, predictors], method = "scale")
-
-# Skalowanie danych treningowych
-train2_std <- predict(scaler, df2_train[, predictors])
-
-# Tworzenie ramki danych ze zeskalowanymi danymi treningowymi
-df2_train_std <- data.frame(df2_train[, target], train2_std)
-colnames(df2_train_std) <- c(target, predictors)
-
-# Skalowanie danych testowych
-test2_std <- predict(scaler, df2_test[, predictors])
-
-# Tworzenie ramki danych ze zeskalowanymi danymi testowymi
-df2_test_std <- data.frame(df2_test[, target], test2_std)
-colnames(df2_test_std) <- c(target, predictors)
-```
-
-### Regresja logistyczna
-
-#### Budowanie modelu
-
-```{r}
-
-df2_train_std$spam=as.factor(df2_train_std$spam)
-df2_test_std$spam=as.factor(df2_test_std$spam)
-
-# Dopasowanie modelu regresji logistycznej
-model <-logistic_reg(mode = "classification",
-  engine = "glm",penalty = tune(), mixture = tune())
-
-# Tworzenie przepisu
-rec <- recipe(spam ~ .,data=df2_test_std)
-
-# Tworzenie workflow
-wkflow <- workflow() %>% 
-  add_model(model) %>%  
-  add_recipe(rec)
-
-# Uczenie modelu
-glm <- wkflow %>% 
-  fit(data = df2_train_std)
-
-```
-
-#### Predykcja
-
-```{r}
-# Przewidywanie wyników na podstawie modelu regresji logistycznej
-pred <- predict(glm, new_data = df2_test_std)
-df_preds <- glm %>% 
-  augment(new_data = df2_test_std)
-df_preds
-```
-
-#### Confusion matrix
-
-```{r}
-prediction=NULL
-prediction <- cbind(df2_test_std, pred)
-cm <- confusionMatrix(prediction$.pred_class,prediction$spam)
-cm
-
-```
-
-#### Metryki
-
-```{r}
-cm$byClass
-cm$overall
-
+split <- initial_split(df,0.85, seed = 47) #funkcja tworząca podział
+df_test <- testing(split) #tworznie zbioru testowego
+df_train <- training(split) #tworzenie zbioru treningowego
 ```
 
 ```{r}
+nrow(df_test)
+nrow(df_train)
+```
 
-roc_auc(df_preds, truth = spam, .pred_1,event_level = "second")
+### Zdefiniowanie modeli
+
+Następnie możemy zdefiniować modele które będziemy potem chcieli wykorzystać.
+
+Model definiujemy za pomocą odpowaidającej mu funkcji podając:
+
+-   Rodzaj zadania - klasyfikacja lub regresja
+
+-   Silnik modelu
+
+-   Hiperparametry - jeżeli chcemy dostrajać model lub ustawić jakieś konkretne (można zostawić puste)
+
+```{r}
+#Model drzewa decyzyjnego
+tree_mod <- decision_tree(mode = "classification",
+                          engine = "rpart")
+
+#Model drzewa z ustawionymi hiperparametrami
+tree_mod2 <- decision_tree(mode = "classification",
+                          engine = "rpart",
+                          min_n = 20,
+                          tree_depth = 7)
+
+#Model regresji logistycznej
+logreg_mod <- logistic_reg(mode = "classification",
+                           engine = "glm")
+```
+
+### Tworzenie przepływu pracy
+
+Można to porównać do tworzenia 'pojemnika' w którym będziemy trzymali nasz model i dodwali mu niezbędne rzeczy oraz prowadzili na nim wszystkie dalsze operacje np. uczenie.
+
+```{r}
+tree_wf <- workflow() %>% #tworzymy przepływ pracy
+  add_model(tree_mod) %>% #dodajemy do niego model
+  add_formula(spam~.) #dodajemy formułe
+```
+
+Dzięki `workflow` możemy w bardzo prosty sposób dodawać też preprocessing danych za pomocą 'przepisów'.
+Przykładowo regresja logistyczna wymaga normalizacji predyktorów
+
+```{r}
+reg_rec <- recipe(spam~., data = df_train) %>% #definiujemy przepis podając formułę i zbiór danych
+  step_normalize() #dodajemy krok normalizujący dane
 ```
 
 ```{r}
-roc_curve(df_preds, truth = spam, .pred_1, event_level = "second") |> 
+reg_wf <- workflow() %>% 
+  add_model(logreg_mod) %>% #dodajemy model
+  add_recipe(reg_rec) #dodajemy wcześniej przygotowany przepis
+
+#nie musimy dodwać formuły ponieważ podana została w przepisie
+```
+
+### Uczenie modelu
+
+Przekazujemy przepływ pracy do funkcji `fit`
+
+```{r}
+tree_wf_fit <- tree_wf %>% 
+  fit(data = df_train)
+
+reg_wf_fit <- reg_wf %>% 
+  fit(data = df_train)
+```
+
+```{r}
+tree_wf_fit
+reg_wf_fit
+```
+
+### Predykcja i testowanie
+
+```{r}
+tree_pred <- predict(tree_wf_fit,df_test) #ramka danych z predykcją
+head(tree_pred)
+
+reg_pred <- predict(reg_wf_fit,df_test) #ramka danych z predykcją
+head(reg_pred)
+```
+
+Łączymy predykcje modelu i wartość rzeczywistą ze zbioru testowego w jedną ramkę
+
+```{r}
+tree_df <- bind_cols(tree_pred, 'target' = df_test$spam)
+head(tree_df)
+
+reg_df <- bind_cols(reg_pred, 'target' = df_test$spam)
+head(tree_df)
+```
+
+Dobrym podsumowaniem jakości modeli klasyfikacyjnych jest 'Confusion Matrix' czyli macierz pomyłek
+
+```{r}
+conf_tree <- conf_mat(tree_df, truth = "target", estimate = ".pred_class")
+conf_tree
+```
+
+```{r}
+autoplot(conf_tree, type = "heatmap")
+```
+
+```{r}
+conf_reg <- conf_mat(reg_df, truth = "target", estimate = ".pred_class")
+conf_reg
+```
+
+```{r}
+autoplot(conf_reg, type = "heatmap")
+```
+
+Ewaluacja na wybranych metrykach możemy wyliczać przez odpowiednie funkcje
+
+```{r}
+accuracy(tree_df, truth = "target", estimate = ".pred_class")
+sens(tree_df, truth = "target", estimate = ".pred_class")
+j_index(tree_df, truth = "target", estimate = ".pred_class")
+```
+
+W celu narysowania krzywej ROC i polieczenia ROC AUC potrzebujemy mieć predykcję w postaci prawdopodobieństw. Możemy je uzyskać tak samo jak wcześniej dodając arugment `type`
+
+```{r}
+tree_pred <- predict(tree_wf_fit,df_test, type = "prob") #ramka danych z predykcją
+head(tree_pred)
+
+reg_pred <- predict(reg_wf_fit,df_test, type = "prob") #ramka danych z predykcją
+head(reg_pred)
+```
+
+Łączymy predykcje modelu i wartość rzeczywistą ze zbioru testowego w jedną ramkę
+
+```{r}
+tree_df <- bind_cols(tree_pred, 'target' = df_test$spam)
+head(tree_df)
+
+reg_df <- bind_cols(reg_pred, 'target' = df_test$spam)
+head(tree_df)
+```
+
+```{r}
+roc_auc(tree_df, truth = "target", ".pred_0")
+```
+
+```{r}
+roc_curve(tree_df, truth = "target", ".pred_0") %>% 
   autoplot()
 ```
 
-### Drzewo decyzyjne
-
-#### Budowanie modelu
+lub możemy narosować korzystając z pakietu `ggplot2`
 
 ```{r}
-model <- decision_tree(
-  mode = "classification",
-  engine = "rpart",
-  cost_complexity = NULL,
-  tree_depth = NULL,
-  min_n = NULL
-)
-
-wkflow <- workflow() %>% 
-  add_model(model) %>%  
-  add_recipe(rec)
-
-
-dt <- wkflow %>% 
-  fit(data = df2_train_std)
+tree_roc <- roc_curve(tree_df, truth = "target", ".pred_0")
+ggplot()+
+  geom_path(data=tree_roc,aes(x=1-specificity,y=sensitivity))
 ```
 
-#### Predykcja
+## Zapisywanie modelu
+
+Jeżeli chcemy zapisać nasz wytrenowany model żeby użyć go np. w innym pliku możemy posłużyć się funkcją `saveRDS`
 
 ```{r}
-pred <- predict(dt, new_data = df2_test_std)
-df_preds <- dt %>%  
-  augment(new_data = df2_test_std)
-df_preds
+saveRDS(tree_wf_fit, "tree_fit.rds")
 ```
-
-#### Confusion matrix
-
-```{r}
-prediction=NULL
-prediction <- cbind(df2_test_std, pred)
-cm <- confusionMatrix(prediction$.pred_class,prediction$spam)
-cm
-```
-
-#### Metryki
-
-```{r}
-cm$byClass
-cm$overall
-```
-
-```{r}
-roc_auc(df_preds, truth = spam, .pred_1,event_level = "second")
-```
-
-```{r}
-roc_curve(df_preds, truth = spam, .pred_1, event_level = "second") |> 
-  autoplot()
-```
-
-### Las losowy
-
-#### Budowanie modelu
-
-```{r}
-model <- rand_forest(
-  mode = "classification",
-  engine = "ranger",
-  mtry = NULL,
-  trees = NULL,
-  min_n = NULL
-)
-
-wkflow <- workflow() %>% 
-  add_model(model) %>%  
-  add_recipe(rec)
-
-
-dt <- wkflow %>% 
-  fit(data = df2_train_std)
-```
-
-#### Predykcja
-
-```{r}
-pred <- predict(dt, new_data = df2_test_std)
-df_preds <- dt %>%  
-  augment(new_data = df2_test_std)
-df_preds
-```
-
-#### Confusion matrix
-
-```{r}
-prediction=NULL
-prediction <- cbind(df2_test_std, pred)
-cm <- confusionMatrix(prediction$.pred_class,prediction$spam)
-cm
-```
-
-#### Metryki
-
-```{r}
-cm$byClass
-cm$overall
-```
-
-```{r}
-roc_auc(df_preds, truth = spam, .pred_1,event_level = "second")
-```
-
-```{r}
-roc_curve(df_preds, truth = spam, .pred_1, event_level = "second") |> 
-  autoplot()
-```
-
-### 
