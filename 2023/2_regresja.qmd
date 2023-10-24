@@ -8,7 +8,7 @@ format:
     embed-resources: true
     self-contained: true
     page-layout: full
-date: "02-06-2023"
+date: "10-19-2023"
 ---
 
 # Spotkanie 2 - Regresja

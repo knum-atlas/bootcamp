@@ -8,7 +8,7 @@ format:
     embed-resources: true
     self-contained: true
     page-layout: full
-date: "02-06-2023"
+date: "10-17-2023"
 editor: 
   markdown: 
     wrap: 72

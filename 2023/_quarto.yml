@@ -15,6 +15,7 @@ book:
     - 1_intro.qmd
     - 2_regresja.qmd
     - 3_klasyfikacja.qmd
+    - competition.qmd
 #     - references.qmd
 # 
 # bibliography: references.bib

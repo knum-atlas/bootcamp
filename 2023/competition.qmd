@@ -1,0 +1,121 @@
+# Konkurs {.unnumbered}
+
+---
+author: "KNUM ATLAS"
+format: 
+  html:
+    toc: true
+    embed-resources: true
+    self-contained: true
+    page-layout: full
+date: "10-25-2023"
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
+```
+
+# Konkurs Bootcamp 2023
+
+------------------------------------------------------------------------
+
+### Polecenie 
+
+Do swojej dyspozycji otrzymasz dane dotyczące satysfakcji pasażerów linii lotniczej. Twoim zadaniem jest oddanie się własnej innwencji twórczej podczas wykonywania: 
+
+- wizulaizacji danych, 
+
+- eksploracji danych 
+
+- oraz w trakcie przygotowania modelu predykcyjnego, który będzie miał na celu przewidywanie zmiennej `Satisfaction`.
+
+Do wykonania zadania możesz wykorzystać metody poznane w trakcie cyklu spotkań `Bootcamp`, lecz **nie musisz się do nich ograniczać**. 
+
+Pamiętaj, że przygotowanie rozwiązania **nie** musi być tylko *suchym* kodem, dobrą praktyką jest załączanie również swoich spostrzerzeń i wnisków. 
+
+### Jakich danych mam użyć?
+
+[Dane znajdziesz tutaj](https://drive.google.com/drive/folders/1A9cIuTZG0bagLcEWVbX_JocptuMbueOe?usp=sharing)
+
+<details>
+
+<summary>Tu znajdziesz opis zmiennych</summary>
+
+`Gender`: Gender of the passengers (Female, Male)
+
+`Customer Type`: The customer type (Loyal customer, disloyal customer)
+
+`Age`: The actual age of the passengers
+
+`Type of Travel`: Purpose of the flight of the passengers (Personal Travel, Business Travel)
+
+`Class`: Travel class in the plane of the passengers (Business, Eco, Eco Plus)
+
+`Flight distance`: The flight distance of this journey
+
+`Inflight wifi service`: Satisfaction level of the inflight wifi service (0:Not Applicable;1-5)
+
+`Departure/Arrival time convenient`: Satisfaction level of Departure/Arrival time convenient
+
+`Ease of Online booking`: Satisfaction level of online booking
+
+`Gate location`: Satisfaction level of Gate location
+
+`Food and drink`: Satisfaction level of Food and drink
+
+`Online boarding`: Satisfaction level of online boarding
+
+`Seat comfort`: Satisfaction level of Seat comfort
+
+`Inflight entertainment`: Satisfaction level of inflight entertainment
+
+`On-board service`: Satisfaction level of On-board service
+
+`Leg room service`: Satisfaction level of Leg room service
+
+`Baggage handling`: Satisfaction level of baggage handling
+
+`Check-in service`: Satisfaction level of Check-in service
+
+`Inflight service`: Satisfaction level of inflight service
+
+`Cleanliness`: Satisfaction level of Cleanliness
+
+`Departure Delay in Minutes`: Minutes delayed when departure
+
+`Arrival Delay in Minutes`: Minutes delayed when Arrival
+
+`Satisfaction`: Airline satisfaction level(Satisfaction, neutral or dissatisfaction)
+
+</details>
+
+### Do kiedy mam przesłać pracę?
+
+Swoje rozwiązanie możesz przesłać do `4 listopada` do `23:59`.
+
+### Jak przesłać pracę?
+
+Swoją pracę możesz przesałać za pomocą tego [formularza](https://forms.gle/J7yqPhGCDivWApyYA)
+
+### Co będziemy oceniać?
+
+Podczas oceny będziemy uwzględniali takie rzeczy jak: 
+
+- estetyka rozwiązania
+
+- ogólny pomysł 
+
+- kreatywne podejście
+
+- realizacja polecenia, w tym:
+
+  - jakość zbudowanego modelu
+  
+  - staranność przygotowania danych
+  
+- realizację zadania w terminie
+  
+
