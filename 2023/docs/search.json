@@ -96,5 +96,19 @@
     "title": "Regresja",
     "section": "Zadanie",
     "text": "Zadanie\nDo dyspozycji macie dane (link) dotyczące przewidywanej długości życia zebrane w 193 państwach na przestrzeni 15 lat.\nDane zawierają 18 kolumn z takimi informacjami jak:\n\nOdsetek zgonów w różnym wieku\nSzczepienia noworodków\nWskaźniki w kontekście państwa (np. GDP, wydatki na służbe zdrowia)\n\nZbudujcie model regresji liniowej przewidujący długość życia na podstawie dostępnych kolumn. Jakie wyszło RMSE? Czy błąd jest wysoki czy niski?\nDla zaawansowanych:\n\nUzupełnić braki danych.\nWykonać model w tidymodels.\nDodać regularyzację."
+  },
+  {
+    "objectID": "3_klasyfikacja.html",
+    "href": "3_klasyfikacja.html",
+    "title": "Klasyfikacja",
+    "section": "",
+    "text": "Spotkanie 3 - Klasyfikacja"
+  },
+  {
+    "objectID": "3_klasyfikacja.html#zadanie",
+    "href": "3_klasyfikacja.html#zadanie",
+    "title": "Klasyfikacja",
+    "section": "Zadanie",
+    "text": "Zadanie\nDo dyspozycji macie dane (link) (plik Healthcare-Diabetes.csv) dotyczące badań na cukrzycę zabrane przez Narodowy Instytut Cukrzycy oraz Chorób Układu Pokarmowego i Nerek w Stanach Zjednoczonych. Celem zadania jest zbudowanie modelu predykcyjnego do określenia na podstawie wyniku badań czy dany pacjent ma cukrzycę. W zbiorze znajdują się następujące kolumny:\n\nPregnancies - liczba ciąż\nGlucose - poziom glukozy we krwi\nBloodPressure - ciśnienie (mm Hg)\nSkinThickness - grubość skóry na tricepsie (mm)\nInsulin - insulina w surowicy (mu U/ml)\nBMI - body mass index\nDiabetesPedigreeFunction - funkcja rodowodu cukrzycy\nAge - wiek\nOutcome - zmienna wynikowa określająca czy pacjent ma cukrzycę"
   }
 ]

@@ -14,7 +14,7 @@ book:
     - index.qmd
     - 1_intro.qmd
     - 2_regresja.qmd
-#     - summary.qmd
+    - 3_klasyfikacja.qmd
 #     - references.qmd
 # 
 # bibliography: references.bib
