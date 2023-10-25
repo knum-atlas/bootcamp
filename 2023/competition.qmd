@@ -36,6 +36,8 @@ Do wykonania zadania możesz wykorzystać metody poznane w trakcie cyklu spotka�
 
 Pamiętaj, że przygotowanie rozwiązania **nie** musi być tylko *suchym* kodem, dobrą praktyką jest załączanie również swoich spostrzerzeń i wnisków. 
 
+Swoje rozwiązanie przygotuj w/lub wyeksportuj do pliku z rozszerzeniem `.rmd`, `.qmd`, `.md`, `.ipnyb` lub `.html`. Przygotuj je tak, aby widoczny był również kod. 
+
 ### Jakich danych mam użyć?
 
 [Dane znajdziesz tutaj](https://drive.google.com/drive/folders/1A9cIuTZG0bagLcEWVbX_JocptuMbueOe?usp=sharing)
@@ -99,6 +101,8 @@ Swoje rozwiązanie możesz przesłać do `4 listopada` do `23:59`.
 ### Jak przesłać pracę?
 
 Swoją pracę możesz przesałać za pomocą tego [formularza](https://forms.gle/J7yqPhGCDivWApyYA)
+
+**Pamiętaj o przesłaniu pliku z poprawnym rozszerzeniem!!!**
 
 ### Co będziemy oceniać?
 
