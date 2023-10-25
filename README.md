@@ -24,4 +24,4 @@ Klasyfikacja:
 
 -   [Rozwiązanie zadania w R]()
 
-Po 3 spotkaniu pojawi się tutaj link do zadania konkursowego!
+Zadanie konkursowe jest już dostępne! Szczegóły znajdziecie w ostatnim rozdziale książki ([tutaj](https://knum-atlas.github.io/bootcamp/competition.html))
